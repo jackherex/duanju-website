@@ -1333,6 +1333,10 @@ html.js-reveal .split.in .w{opacity:1;transform:none}
   .stage3d .col--up{margin-top:-44px}
   .stage3d .col--down{margin-top:36px}
   .faq__item summary,.faq__body{padding-right:32px}
+  /* mock 里这三个是**真能点的**控件（弹幕开关 / 屏蔽词 / 原画对比），
+     桌面 27~30px 尚可，手指点按要 ≥36px 才不容易误触。
+     只加最小高度，不改内边距，避免把 mock 撑得不像真实 App 界面。 */
+  .dmmock__btn,.ranktab,.hqmock__cmp{min-height:36px}
 }
 
 @media (prefers-reduced-motion:reduce){
