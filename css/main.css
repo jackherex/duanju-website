@@ -201,10 +201,17 @@ html.js-reveal .reveal-card.in{
   margin-top:40px;display:flex;gap:14px;justify-content:center;
   align-items:center;flex-wrap:wrap;
 }
-/* 注：.hero__meta / .dot / @keyframes pulse 原为首屏「剧库已同步 · 共 N 部在库」
-   状态文字服务，该文案已按要求移除，三处样式一并删除。
+/* 注：.hero__meta / .dot 原为首屏「剧库已同步 · 共 N 部在库」状态文字服务，
+   该文案已按要求移除，两处样式一并删除。
+   ⚠️ @keyframes pulse 必须保留 —— 它被 .nextmock__dot（无感加载下集的绿点）
+   共用，删掉会让那个点停止呼吸。
    ⚠️ 若日后恢复该文案：不要用 hidden 属性隐藏，
    因为 .hero__meta 的 display:flex 会盖掉 UA 的 [hidden] 规则。 */
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(48,209,88,.45)}
+  70%{box-shadow:0 0 0 7px rgba(48,209,88,0)}
+  100%{box-shadow:0 0 0 0 rgba(48,209,88,0)}
+}
 
 /* ---- HERO 3D 海报墙 ---- */
 .hero__stage{
