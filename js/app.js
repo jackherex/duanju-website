@@ -35,7 +35,7 @@
     var drawer = document.createElement('div');
     drawer.className = 'nav__drawer';
     drawer.style.display = 'none';
-    drawer.innerHTML = '<a href="#library">剧库</a><a href="#exclusive">独家功能</a>' +
+    drawer.innerHTML = '<a href="#exclusive">独家功能</a>' +
       '<a href="#devices">三端下载</a><a href="#faq">常见问题</a><a href="#download">下载</a>';
     nav.parentNode.insertBefore(drawer, nav.nextSibling);
 
@@ -249,85 +249,13 @@
   var PLAY_ICON = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">' +
     '<path d="M8 5.5v13c0 .8.9 1.3 1.6.8l9.4-6.5c.6-.4.6-1.3 0-1.7L9.6 4.7C8.9 4.2 8 4.7 8 5.5Z" fill="currentColor"/></svg>';
 
-  /* ---------- 数据 ---------- */
+  /* ---------- 数据 ----------
+     剧库网格已按需求整区移除，但 DATA.items 仍在用：
+     首屏 3D 海报墙、以及 7 个功能区里的 mock 演示都从它取数据，
+     所以 data/dramas.json 与本地封面资源必须保留。 */
   var DATA = { items: [] };
-  var currentCat = '全部';
-  var shown = 0;
-  var PAGE = 24;
 
-  function filtered() {
-    return currentCat === '全部'
-      ? DATA.items
-      : DATA.items.filter(function (d) {
-          return (d.category || '').split('/').indexOf(currentCat) !== -1;
-        });
-  }
-
-  function renderRail(reset) {
-    var rail = $('#rail');
-    var list = filtered();
-    if (reset) { rail.innerHTML = ''; shown = 0; }
-    var slice = list.slice(shown, shown + PAGE);
-
-    slice.forEach(function (d, i) {
-      var el = document.createElement('a');
-      el.className = 'card' + (d.cover ? '' : ' card--ph');
-      el.href = '#download';
-      el.setAttribute('aria-label', d.title);
-      el.style.animationDelay = Math.min(i * 22, 420) + 'ms';
-      el.innerHTML =
-        '<div class="card__art">' + artHTML(d) +
-          (d.episodes ? '<span class="card__ep">' + esc(d.episodes) + '</span>' : '') +
-          '<div class="card__play">' + PLAY_ICON + '</div>' +
-        '</div>' +
-        '<div class="card__title">' + esc(d.title) + '</div>' +
-        '<div class="card__tags">' +
-          esc(d.tags && d.tags.length ? d.tags.join(' · ') : d.category) +
-        '</div>';
-      rail.appendChild(el);
-    });
-
-    shown += slice.length;
-    var btn = $('#loadMore');
-    if (btn) {
-      var rest = list.length - shown;
-      btn.textContent = rest > 0 ? '加载更多（还有 ' + rest + ' 部）' : '已经到底啦';
-      btn.disabled = rest <= 0;
-      btn.style.opacity = rest > 0 ? '1' : '.4';
-      btn.style.cursor = rest > 0 ? 'pointer' : 'default';
-    }
-  }
-
-  function buildChips() {
-    var counts = {};
-    DATA.items.forEach(function (d) {
-      (d.category || '').split('/').forEach(function (c) { if (c) counts[c] = (counts[c] || 0) + 1; });
-    });
-    var order = ['真人短剧', '漫剧', 'AI短剧', '漫画剧', '都市', '剧情', '青春',
-      '喜剧', '科幻', '动作冒险', '战争', '综艺', '灾难'];
-    var cats = order.filter(function (c) { return counts[c] > 0; });
-    Object.keys(counts).forEach(function (c) {
-      if (cats.indexOf(c) === -1 && c !== '精选') cats.push(c);
-    });
-
-    var box = $('#chips');
-    box.innerHTML = '';
-    ['全部'].concat(cats).forEach(function (c, i) {
-      var b = document.createElement('button');
-      b.className = 'chip' + (i === 0 ? ' on' : '');
-      b.textContent = c;
-      b.setAttribute('role', 'tab');
-      b.addEventListener('click', function () {
-        $$('.chip', box).forEach(function (x) { x.classList.remove('on'); });
-        b.classList.add('on');
-        currentCat = c;
-        renderRail(true);
-      });
-      box.appendChild(b);
-    });
-  }
-
-  /* ---------- HERO 3D 海报墙 ---------- */
+  /* ---------- HERO 3D 海报墙 ---------- */  /* ---------- HERO 3D 海报墙 ---------- */
   function buildStage() {
     var stage = $('#stage3d');
     var posters = DATA.items.filter(function (d) { return d.cover; });
@@ -793,8 +721,6 @@
   /* ---------- 启动 ---------- */
   function boot(data) {
     DATA.items = (data && data.items) || [];
-    buildChips();
-    renderRail(true);
     buildStage();
     buildNext();
     buildDanmaku();
@@ -805,9 +731,6 @@
     fillRelease();
     initReveal();
     initCounters();
-
-    var btn = $('#loadMore');
-    if (btn) btn.addEventListener('click', function () { if (!btn.disabled) renderRail(false); });
   }
 
   initNav();
