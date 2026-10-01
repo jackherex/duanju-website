@@ -73,6 +73,19 @@
     // 启用隐藏态（类加上去之后，未进视口的元素才隐藏）
     root.classList.add('js-reveal');
 
+    /* 「擦出」动画结束后把 clip-path 清成 none。
+       .wipe.in 的最终态是 clip-path:inset(0 0 0 0) 而不是 none ——
+       它视觉上等价于不裁剪，但元素会一直留在裁剪上下文里，
+       里面的动画（弹幕）被额外栅格化一次。
+       ⚠️ 不能直接在 .in 里写 clip-path:none：
+          inset() → none 不可插值，过渡会变成生硬跳变，擦出效果就没了。
+       所以只在过渡结束的这一刻清掉。 */
+    $$('.wipe').forEach(function (el) {
+      el.addEventListener('transitionend', function (e) {
+        if (e.propertyName === 'clip-path') el.style.clipPath = 'none';
+      });
+    });
+
     /* 编排型区块：整块作为一个观察目标，进入视口后让卡内元素依次弹出。
        为什么不逐卡观察：7 张卡各自 255px 高，逐卡触发时滚过一屏会有
        四五张同时进入，错峰被淹没 —— 看起来就是「唰」地一下全出来。

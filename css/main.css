@@ -104,10 +104,19 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;
 /* ================= 滚动显现 =================
    安全策略：CSS 默认可见；JS 就绪后给 <html> 加 .js-reveal，才启用隐藏+动画。
    这样即使 JS 失败 / 锚点直跳 / 无头渲染，内容也永远不会丢失。 */
+/* ⚠️ 这里**故意不写 will-change**。
+   曾经写过 will-change:opacity,transform，结果 .in 之后从不撤销 ——
+   全站 56 个揭示元素 = 56 个**永久提升的合成图层**：
+     · 吃 GPU 显存
+     · 更要命的是：图层内的文字被**一次性栅格化**并随图层移动。
+       手机 DPR 是整数(2x/3x)、栅格对齐所以清晰；
+       Windows 125%/150% 缩放是分数 DPR(1.25/1.5)、栅格不对齐
+       → 文字发虚、移动时发抖 —— 这正是「手机正常、电脑不正常」的原因。
+   一次性过渡不需要 will-change（它本来是给「即将变化且反复变化」的元素用的），
+   浏览器对 opacity/transform 过渡本身就做了合成优化。 */
 html.js-reveal .reveal{
   opacity:0;transform:translateY(28px);
   transition:opacity .9s var(--ease),transform .9s var(--ease);
-  will-change:opacity,transform;
 }
 html.js-reveal .reveal.in{opacity:1;transform:none}
 /* 错峰阶梯：步长 80ms。
@@ -131,7 +140,7 @@ html.js-reveal .reveal-card{
   filter:blur(6px);
   transition:opacity .78s var(--ease),transform .78s var(--ease),
              filter .78s var(--ease);
-  will-change:opacity,transform,filter;
+  /* 同样不写 will-change，理由见上方 .reveal 的说明 */
 }
 html.js-reveal .reveal-card.in{
   opacity:1;transform:none;filter:blur(0);
@@ -888,9 +897,14 @@ html.js-reveal .split.in .w{opacity:1;transform:none}
 .dmmock__lane span{
   position:absolute;left:0;
   font-size:13px;font-weight:500;line-height:22px;
-  color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.9);
+  /* 文字阴影收窄：原来 0 1px 4px 的 4px 模糊半径在 13px 字号下会糊成一团光晕，
+     看起来像重影。改成 2px 既保证压在画面上的可读性，又不糊。 */
+  color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.92);
   animation:dmroll linear infinite;
-  will-change:transform;
+  /* ⚠️ 同样不写 will-change:transform。
+     加上它会把文字一次性栅格化进图层，分数 DPR 下（Windows 缩放 125%/150%）
+     栅格不对齐 → 文字发虚、滚动时发抖。translateX 动画本身就会被合成，
+     不需要这个提示。 */
   padding-left:100%;
 }
 /* 位移改成 -100%：span 的宽度 = 轨道宽(100% padding) + 文字宽，
