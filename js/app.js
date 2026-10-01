@@ -13,9 +13,9 @@
        · releases        —— 全部版本列表，方便翻历史 / 找 TV 包
      因此官网上永远指向最新版，维护成本为零。 */
   var RELEASE = {
-    repo: 'https://github.com/jackson977800/duanjuapp-release',
-    latest: 'https://github.com/jackson977800/duanjuapp-release/releases/latest',
-    all: 'https://github.com/jackson977800/duanjuapp-release/releases',
+    repo: 'https://github.com/jackherex/duanjuapp-release',
+    latest: 'https://github.com/jackherex/duanjuapp-release/releases/latest',
+    all: 'https://github.com/jackherex/duanjuapp-release/releases',
     // 仅用于展示的参考信息，不影响下载去向
     version: 'v1.0.18+19',
     updated: '2026-10-01',
@@ -338,27 +338,6 @@
     els.forEach(function (el) { io.observe(el); });
   }
 
-  /* ---------- 数字动画 ---------- */
-  function initCounters() {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        var el = e.target; io.unobserve(el);
-        var target = parseInt(el.dataset.count, 10) || 0;
-        var suffix = el.dataset.suffix || '';
-        if (target === 0) { el.textContent = '0' + suffix; return; }
-        var t0 = null, dur = 1500;
-        (function step(ts) {
-          if (!t0) t0 = ts;
-          var p = Math.min((ts - t0) / dur, 1);
-          el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + suffix;
-          if (p < 1) requestAnimationFrame(step);
-        })(performance.now());
-      });
-    }, { threshold: 0.4 });
-    $$('.stat__num').forEach(function (el) { io.observe(el); });
-  }
-
   /* ---------- 工具 ---------- */
   function pick(arr, n, seedOffset) {
     var out = [], pool = arr.slice();
@@ -564,10 +543,14 @@
     if (!rows) return;
 
     var eps = ['第 1 集', '第 2 集', '第 3 集', '第 4 集', '第 5 集'];
+    /* ⚠️ 类名必须是 .dlrow__tag--*（父元素是 .dlrow__tag）。
+       历史上这里写成了 dlmrow__tag--*（多一个 m），与 CSS 定义对不上，
+       「已完成」的绿标和「含弹幕」的蓝标会静默失效（无报错、只是不上色）。
+       —— 这是 .dlrow/.dlmrow 拼写坑的第 3 次复发，改前先 grep CSS 确认。 */
     var states = [
-      { w: 100, tag: '已完成', cls: 'dlmrow__tag--done' },
-      { w: 100, tag: '含弹幕', cls: 'dlmrow__tag--dm' },
-      { w: 78, tag: '含弹幕', cls: 'dlmrow__tag--dm' },
+      { w: 100, tag: '已完成', cls: 'dlrow__tag--done' },
+      { w: 100, tag: '含弹幕', cls: 'dlrow__tag--dm' },
+      { w: 78, tag: '含弹幕', cls: 'dlrow__tag--dm' },
       { w: 41, tag: '下载中', cls: '' },
       { w: 0, tag: '等待中', cls: '' }
     ];
@@ -875,7 +858,6 @@
     buildSync();
     fillRelease();
     initReveal();
-    initCounters();
     initProgress();
     initChapNav();
     initSpot();

@@ -20,7 +20,11 @@
 
   --text:#f5f5f7;
   --text-2:#a1a1a6;
-  --text-3:#6e6e73;
+  /* ⚠️ --text-3 原来 #6e6e73，在 #0c0c0f / #000 底上实测对比度只有 3.85 / 4.14，
+     低于 WCAG AA 的 4.5:1 —— 而它承担了 9 处正文级文字
+     （mock 说明、页脚法务、三端体积、章节序号…），全部不达标。
+     提到 #8a8a8f 后实测 5.66，留足余量（10~11.5px 小字也够）。 */
+  --text-3:#8a8a8f;
   --accent:#ff2d55;
   --accent-2:#ff6b3d;
 
@@ -86,47 +90,10 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88em;
 
 .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 24px}
 
-/* ================= 排版刻度 =================
-   高级感的第一来源是「层级对比」而不是「字号大」。
-   统一在这里定义，避免各区块各写一套 clamp。 */
-.t-display{font-size:var(--fs-display);font-weight:700;
-  letter-spacing:var(--track-display);line-height:1.02}
-.t-title{font-size:var(--fs-title);font-weight:600;
-  letter-spacing:var(--track-title);line-height:1.08}
-.t-h{font-size:var(--fs-h);font-weight:600;letter-spacing:var(--track-h)}
-.t-body{font-size:var(--fs-body);color:var(--text-2);line-height:1.66}
-.t-cap{font-size:var(--fs-cap);color:var(--text-3);letter-spacing:var(--track-cap)}
-
-/* 大标题的收尾：渐变白 → 灰，让文字有「受光」的方向感 */
-.tt-grad{
-  background:linear-gradient(176deg,#fff 6%,#e6e6ea 42%,#9b9ba2 88%);
-  -webkit-background-clip:text;background-clip:text;
-  -webkit-text-fill-color:transparent;color:transparent;
-}
-
-/* 数字统一用等宽表格数字，避免跳动与「随便打的」观感 */
-.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
-
-/* ================= 玻璃卡：全站统一的卡片材质 =================
-   硬边框 1px 白线是「平」的根源。这里改成四层叠加：
-     ① 顶部内高光  → 光从上方来
-     ② 底部内暗线  → 厚度
-     ③ 外部分层阴影 → 悬浮
-     ④ 悬停时描边提亮 */
-.glass{
-  position:relative;
-  background:linear-gradient(178deg,var(--surface-2) 0%,var(--surface) 46%);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  box-shadow:var(--sh-2),var(--inset-top);
-  transition:transform .5s var(--ease),border-color .5s var(--ease),
-             box-shadow .5s var(--ease),background .5s var(--ease);
-}
-.glass:hover{
-  transform:translateY(-5px);
-  border-color:var(--line-strong);
-  box-shadow:var(--sh-3),var(--inset-top);
-}
+/* 排版刻度（--fs-*）、分层阴影（--sh-*）、光场（--glow-*）统一在 :root 定义，
+   各组件直接引用变量。
+   注：曾有一批 .t-display / .t-title / .t-h / .t-body / .t-cap / .tt-grad /
+   .num / .glass 工具类，实测全站零引用（各组件都写了自己的版本），已删除。 */
 
 /* 细腻噪点，避免大面积纯黑显得死板 */
 .grain{
@@ -411,37 +378,34 @@ html.js-reveal .reveal-card.in{
   background:linear-gradient(180deg,transparent 24%,rgba(0,0,0,.4) 58%,var(--bg) 92%);
 }
 
-/* ================= 数字 ================= */
-.stats{padding:26px 0 96px;position:relative;z-index:3}
-.stats__grid{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:20px;
-  border-top:1px solid var(--line);padding-top:44px;
-}
-.stat{text-align:center}
-.stat__num{
-  font-size:clamp(34px,5.2vw,58px);font-weight:600;letter-spacing:-.03em;
-  line-height:1;font-variant-numeric:tabular-nums;
-  background:linear-gradient(180deg,#fff,#9d9da2);
-  -webkit-background-clip:text;background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.stat__label{margin-top:12px;font-size:13px;color:var(--text-3)}
-
 /* ================= 章节序号导航（右侧悬浮） =================
    只在功能区段落显示，滚出即淡出。给页面「有结构」的仪式感。 */
 .chap{
   position:fixed;right:26px;top:50%;transform:translateY(-50%) translateX(14px);
   z-index:90;display:flex;flex-direction:column;align-items:flex-end;gap:11px;
-  opacity:0;pointer-events:none;
-  transition:opacity .5s var(--ease),transform .5s var(--ease);
+  /* ⚠️ 必须同时 visibility:hidden —— 只写 opacity:0 + pointer-events:none 的话，
+     里面的 <a> 依然在 Tab 顺序里。而 <nav> 上挂了 aria-hidden="true"，
+     于是键盘用户会 Tab 进「屏幕阅读器看不见、眼睛也看不见」的链接。
+     visibility:hidden 才是真正把子树移出可聚焦范围。 */
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .5s var(--ease),transform .5s var(--ease),
+             visibility 0s linear .5s;
 }
-.chap.on{opacity:1;transform:translateY(-50%);pointer-events:auto}
+.chap.on{
+  opacity:1;visibility:visible;transform:translateY(-50%);pointer-events:auto;
+  transition:opacity .5s var(--ease),transform .5s var(--ease),visibility 0s;
+}
+/* 键盘 Tab 到内部链接时也要能看见，否则焦点落到不可见元素上 */
+.chap:focus-within{opacity:1;visibility:visible;transform:translateY(-50%);pointer-events:auto}
 .chap__i{
   display:flex;align-items:center;gap:9px;
   font-size:10.5px;font-weight:600;letter-spacing:.08em;
   color:var(--text-3);font-variant-numeric:tabular-nums;
   transition:color .35s var(--ease);
 }
+/* 触达高度：10.5px 的小字本身只有 16px 高，撑到 24px 便于点按/聚焦 */
+.chap__i{padding:4px 0;border-radius:4px}
+.chap__i:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .chap__i span{opacity:0;transform:translateX(6px);
   transition:opacity .35s var(--ease),transform .35s var(--ease)}
 .chap__i i{
@@ -590,84 +554,14 @@ html.js-reveal .split.in .w{opacity:1;transform:none}
 }
 .feature__list b{color:var(--text);font-weight:500;margin-right:7px}
 .feature__visual{display:flex;justify-content:center;align-items:center}
+/* 注：此处原有「手机 mockup」与「投屏 mockup」两套样式，
+   对应的 HTML 早已移除、实测零引用，已整块删除。
+   ⚠️ 一并删掉的 @keyframes tvpulse / wv 是它们专属的；
+      而 @keyframes pulse 被 .nextmock__dot 共用，必须保留。
+   ⚠️ 写注释时别出现星号紧跟斜杠的序列（例如列类名写成点加类名加星号再加斜杠），
+      那会提前闭合注释，把后面的注释文字变成真 CSS 规则，静默吃掉下一个选择器块。 */
 
-/* ---- 手机 mockup ---- */
-.phone{
-  width:270px;border-radius:36px;padding:9px;
-  background:linear-gradient(160deg,#3a3a40,#191920 42%,#2b2b31);
-  box-shadow:0 44px 90px -26px rgba(0,0,0,.95),0 0 0 1px rgba(255,255,255,.07) inset;
-}
-.phone__screen{
-  border-radius:29px;overflow:hidden;background:#0b0b0e;
-  height:520px;display:flex;flex-direction:column;
-}
-.phone__bar{
-  height:28px;display:flex;align-items:center;justify-content:space-between;
-  padding:0 17px;font-size:10.5px;color:var(--text-2);flex:none;
-}
-.phone__icons{width:38px;height:8px;border-radius:3px;background:rgba(255,255,255,.16)}
-.phone__player{position:relative;height:200px;flex:none;overflow:hidden}
-.phone__player img{width:100%;height:100%;object-fit:cover}
-.phone__scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.28),transparent 42%,rgba(0,0,0,.85))}
-.phone__play{
-  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.93);
-  display:flex;align-items:center;justify-content:center;
-}
-.phone__title{
-  position:absolute;left:15px;right:15px;bottom:13px;
-  font-size:13px;font-weight:500;
-  display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;
-}
-.phone__bar2{flex:none;padding:12px 15px 4px}
-.phone__progress{height:3px;border-radius:3px;background:rgba(255,255,255,.15);overflow:hidden}
-.phone__progress i{display:block;height:100%;width:14%;background:var(--accent);border-radius:3px}
-.phone__times{display:flex;justify-content:space-between;margin-top:7px;font-size:10px;color:var(--text-3)}
-.phone__list{flex:1;overflow:hidden;padding:6px 15px 14px;display:flex;flex-direction:column;gap:8px}
-.prow{display:flex;gap:9px;align-items:center}
-.prow img{width:44px;height:58px;border-radius:7px;object-fit:cover;flex:none;background:var(--surface-2)}
-.prow div{min-width:0}
-.prow b{display:block;font-size:11.5px;font-weight:500;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.prow span{font-size:10px;color:var(--text-3)}
 
-/* ---- 投屏 mockup ---- */
-.cast{display:flex;flex-direction:column;align-items:center;gap:20px}
-.cast__tv{
-  width:300px;border-radius:11px;padding:7px;
-  background:linear-gradient(160deg,#33333a,#17171c);
-  box-shadow:0 34px 70px -26px rgba(0,0,0,.95);
-}
-.cast__tvscreen{
-  position:relative;border-radius:6px;overflow:hidden;aspect-ratio:16/9;background:#000;
-}
-.cast__tvscreen img{width:100%;height:100%;object-fit:cover;opacity:.92}
-.cast__pulse{
-  position:absolute;inset:0;border-radius:6px;
-  box-shadow:0 0 0 0 rgba(255,45,85,.5) inset;
-  animation:tvpulse 2.6s infinite;
-}
-@keyframes tvpulse{
-  0%{box-shadow:0 0 0 0 rgba(255,45,85,.42) inset}
-  70%{box-shadow:0 0 0 14px rgba(255,45,85,0) inset}
-  100%{box-shadow:0 0 0 0 rgba(255,45,85,0) inset}
-}
-.cast__tvstand{width:74px;height:5px;border-radius:0 0 4px 4px;background:#26262c;margin:0 auto}
-.cast__link{display:flex;gap:8px;align-items:center;height:20px}
-.cast__wave{
-  width:5px;border-radius:5px;background:var(--accent);
-  animation:wv 1.15s ease-in-out infinite;height:6px;opacity:.55;
-}
-.cast__wave:nth-child(2){animation-delay:.16s}
-.cast__wave:nth-child(3){animation-delay:.32s}
-@keyframes wv{0%,100%{height:6px;opacity:.45}50%{height:19px;opacity:1}}
-.cast__phone{
-  display:flex;align-items:center;gap:9px;
-  padding:9px 16px;border-radius:980px;
-  background:var(--surface);border:1px solid var(--line);
-  font-size:12.5px;color:var(--text-2);
-}
-.cast__dot{width:7px;height:7px;border-radius:50%;background:#30d158;flex:none}
 
 /* ================= 全平台 ================= */
 .devices{padding:120px 0}
@@ -726,7 +620,6 @@ html.js-reveal .split.in .w{opacity:1;transform:none}
   color:var(--text-3);
   font-variant-numeric:tabular-nums;
 }
-.dev__meta--soon{background:rgba(255,159,10,.12);color:#ff9f0a}
 .dev__feat{
   position:relative;margin-top:20px;list-style:none;display:flex;flex-wrap:wrap;gap:7px;
 }
@@ -873,6 +766,26 @@ html.js-reveal .split.in .w{opacity:1;transform:none}
 .excl:hover .excl__go{color:var(--accent)}
 .excl__go svg{transition:transform .3s var(--ease)}
 .excl:hover .excl__go svg{transform:translateX(3px)}
+
+/* ⚠️ .excl--wide（第 7 张卡）此前 CSS 从未定义 ——
+   HTML 里挂了类名但没有任何规则，于是它和其余 6 张一样是半宽，
+   末行右半边留下 524×235 的空白缺口。
+   这里给它跨满整行，并改成「序号+标题在左、描述在右」的横向排布，
+   否则 1132px 宽只放两行字会显得很空。 */
+.excl--wide{grid-column:1/-1;padding:34px 38px}
+.excl--wide .excl__d{max-width:none}
+@media (min-width:1001px){
+  .excl--wide{
+    display:grid;
+    grid-template-columns:minmax(220px,290px) minmax(0,1fr) auto;
+    grid-template-rows:auto auto;
+    align-items:center;column-gap:34px;
+  }
+  .excl--wide .excl__no{grid-area:1/1/2/2;align-self:end}
+  .excl--wide .excl__t{grid-area:2/1/3/2;margin-top:10px}
+  .excl--wide .excl__d{grid-area:1/2/3/3;margin-top:0}
+  .excl--wide .excl__go{grid-area:1/3/3/4;margin-top:0;white-space:nowrap}
+}
 
 /* ================= 无感加载下集 mock ================= */
 .nextmock{
@@ -1388,11 +1301,18 @@ html.js-reveal .split.in .w{opacity:1;transform:none}
 }
 
 @media (max-width:1000px){
-  .feature__wrap{grid-template-columns:1fr;gap:52px}
+  /* ⚠️⚠️ 必须是 minmax(0,1fr)，不能写 1fr。
+     1fr 等价于 minmax(auto,1fr)，auto 下限 = 内容的 min-content 宽度；
+     而 .nextmock 的 min-content 实测 410px（max-width 卡不住），
+     390px 手机上可用宽只有 354px → 网格轨道被撑到 410px，
+     整个 .feature__wrap 变 446px，文字和 mock 一起被 overflow-x:hidden 裁掉 38px。
+     这是 grid blowout，不是「窄屏样式没写」。 */
+  .feature__wrap{grid-template-columns:minmax(0,1fr);gap:52px}
+  .feature__copy,.feature__visual{min-width:0}
   .feature--flip .feature__copy{order:1}
   .feature--flip .feature__visual{order:2}
   .feature__visual{order:2}
-  .dev-grid--2,.dev-grid--3{grid-template-columns:1fr;gap:16px}
+  .dev-grid--3{grid-template-columns:1fr;gap:16px}
   .excl-grid{grid-template-columns:1fr;gap:14px}
   .nav__links{display:none}
   .nav__toggle{display:block;margin-left:auto}
@@ -1402,8 +1322,6 @@ html.js-reveal .split.in .w{opacity:1;transform:none}
 
 @media (max-width:720px){
   .wrap{padding:0 18px}
-  .stats__grid{grid-template-columns:repeat(2,1fr);gap:34px 16px}
-  .stats{padding-bottom:70px}
   .feature{padding:84px 0}
   .devices,.faq{padding:84px 0}
   .excl{padding:28px 22px 26px}
@@ -1414,9 +1332,6 @@ html.js-reveal .split.in .w{opacity:1;transform:none}
   .stage3d .col{gap:10px}
   .stage3d .col--up{margin-top:-44px}
   .stage3d .col--down{margin-top:36px}
-  .phone{width:246px}
-  .phone__screen{height:470px}
-  .cast__tv{width:100%;max-width:300px}
   .faq__item summary,.faq__body{padding-right:32px}
 }
 
