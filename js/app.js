@@ -377,18 +377,18 @@
     return out || t;
   }
 
-  function artHTML(d) {    if (d.cover) {
-      return '<img src="' + d.cover + '" alt="' + esc(d.title) + '" loading="lazy" decoding="async">';
-    }
-    var ch = (d.title || '剧').charAt(0);
-    return '<div style="width:100%;height:100%;display:flex;align-items:center;' +
-      'justify-content:center;background:linear-gradient(150deg,#25252e,#141419);">' +
-      '<span style="font-size:26px;font-weight:600;color:rgba(255,255,255,.16)">' +
-      esc(ch) + '</span></div>';
+  /* ---------- 缩略图路径 ----------
+     原图是 640×915 的竖版封面，但 mock 里有几处只显示 34×46
+     （nextmock 的「正在播放 / 已就绪」两张小图、榜单每行的封面）。
+     实测这些位置加载原图属于**超发 9.41 倍**（需要 68px@2x，给了 640px）。
+     assets/covers/t/ 下是 128px 的缩略图（1.9x 余量），
+     平均 77.6KB → 6.9KB，省 91%。
+     ⚠️ 只用于「小位图」；hero 海报墙(需 676px@2x)、
+        nextmock 大图(744px)、dmmock 大图(876px)、hqmock 大图(812px)
+        都必须用原图，否则会糊。 */
+  function thumb(p) {
+    return String(p || '').replace('/covers/', '/covers/t/');
   }
-
-  var PLAY_ICON = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">' +
-    '<path d="M8 5.5v13c0 .8.9 1.3 1.6.8l9.4-6.5c.6-.4.6-1.3 0-1.7L9.6 4.7C8.9 4.2 8 4.7 8 5.5Z" fill="currentColor"/></svg>';
 
   /* ---------- 数据 ----------
      剧库网格已按需求整区移除，但 DATA.items 仍在用：
@@ -440,10 +440,11 @@
     var now = withCover[0], up = withCover[1];
 
     var nc = $('#nextCover');
-    if (nc) { nc.src = up.cover; nc.alt = ''; }
+    if (nc) { nc.src = up.cover; nc.alt = ''; }          // 大图：用原图
     var nn = $('#nextNow'), nu = $('#nextUp');
-    if (nn) { nn.src = now.cover; nn.alt = ''; }
-    if (nu) { nu.src = up.cover; nu.alt = ''; }
+    // 小图（显示 34×46）：用 128px 缩略图
+    if (nn) { nn.src = thumb(now.cover); nn.alt = ''; }
+    if (nu) { nu.src = thumb(up.cover); nu.alt = ''; }
     var nnt = $('#nextNowTitle'); if (nnt) nnt.textContent = now.title;
     var nut = $('#nextUpTitle'); if (nut) nut.textContent = up.title;
 
@@ -613,7 +614,8 @@
         '<span class="rankrow__no">' + esc(it.rank) + '</span>' +
         '<span class="rankrow__art">' +
           (it.cover
-            ? '<img src="' + it.cover + '" alt="" loading="lazy" decoding="async">'
+            // 榜单每行封面只显示 34×46 → 用缩略图（见 thumb() 说明）
+            ? '<img src="' + thumb(it.cover) + '" alt="" loading="lazy" decoding="async">'
             : esc((it.title || '剧').charAt(0))) +
         '</span>' +
         '<span class="rankrow__body">' +
