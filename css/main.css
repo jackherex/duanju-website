@@ -73,15 +73,20 @@ html.js-reveal .reveal.in{opacity:1;transform:none}
 .reveal[data-delay="7"]{transition-delay:.56s}
 .reveal[data-delay="8"]{transition-delay:.64s}
 
-/* 编排型卡片（独家功能区）：位移更大、时长更短，
-   配合 JS 按行下发的 transition-delay，滚到时一层层铺开。
+/* 编排型卡片（独家功能区）：位移更大、带缩放与模糊，
+   配合 JS 按行下发的 transition-delay，滚到时一层层弹上来。
    延迟由 JS 内联设置，故此处不设 transition-delay。 */
 html.js-reveal .reveal-card{
-  opacity:0;transform:translateY(38px);
-  transition:opacity .62s var(--ease),transform .62s var(--ease);
-  will-change:opacity,transform;
+  opacity:0;
+  transform:translateY(72px) scale(.94);
+  filter:blur(6px);
+  transition:opacity .78s var(--ease),transform .78s var(--ease),
+             filter .78s var(--ease);
+  will-change:opacity,transform,filter;
 }
-html.js-reveal .reveal-card.in{opacity:1;transform:none}
+html.js-reveal .reveal-card.in{
+  opacity:1;transform:none;filter:blur(0);
+}
 
 /* ================= 导航 ================= */
 .nav{
@@ -196,19 +201,10 @@ html.js-reveal .reveal-card.in{opacity:1;transform:none}
   margin-top:40px;display:flex;gap:14px;justify-content:center;
   align-items:center;flex-wrap:wrap;
 }
-.hero__meta{
-  margin-top:26px;font-size:12.5px;color:var(--text-3);
-  display:flex;align-items:center;justify-content:center;gap:7px;
-}
-.dot{
-  width:6px;height:6px;border-radius:50%;background:#30d158;
-  box-shadow:0 0 0 0 rgba(48,209,88,.5);animation:pulse 2.4s infinite;
-}
-@keyframes pulse{
-  0%{box-shadow:0 0 0 0 rgba(48,209,88,.45)}
-  70%{box-shadow:0 0 0 7px rgba(48,209,88,0)}
-  100%{box-shadow:0 0 0 0 rgba(48,209,88,0)}
-}
+/* 注：.hero__meta / .dot / @keyframes pulse 原为首屏「剧库已同步 · 共 N 部在库」
+   状态文字服务，该文案已按要求移除，三处样式一并删除。
+   ⚠️ 若日后恢复该文案：不要用 hidden 属性隐藏，
+   因为 .hero__meta 的 display:flex 会盖掉 UA 的 [hidden] 规则。 */
 
 /* ---- HERO 3D 海报墙 ---- */
 .hero__stage{
@@ -265,6 +261,10 @@ html.js-reveal .reveal-card.in{opacity:1;transform:none}
   font-weight:600;letter-spacing:-.028em;line-height:1.08;
 }
 .sec-sub{margin-top:16px;font-size:clamp(15px,1.8vw,19px);color:var(--text-2)}
+
+/* 剧库区没有主标题，只剩一句副标题；
+   通用节头的 margin-top:16px 是为「紧跟大标题」留的，这里要去掉。 */
+.sec-head--sub-only .sec-sub{margin-top:0}
 
 /* ================= 剧库 ================= */
 .library{padding:60px 0 110px}

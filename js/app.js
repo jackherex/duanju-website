@@ -102,9 +102,11 @@
 
       rows.forEach(function (row, i) {
         row.items.forEach(function (el) {
-          // 卡内再做一次微错峰，避免同一行两张卡同时动
+          // 行间 0.16s、行内错 0.07s：
+          // 单卡动效加大后（位移 72px + 缩放 + 模糊），错峰也要相应拉开，
+          // 否则前一张还没落位后一张就起来了，看不出「一张张」。
           var slot = row.items.indexOf(el);
-          el.style.transitionDelay = (i * 0.11 + slot * 0.05).toFixed(3) + 's';
+          el.style.transitionDelay = (i * 0.16 + slot * 0.07).toFixed(3) + 's';
         });
       });
     });
@@ -804,10 +806,6 @@
     initReveal();
     initCounters();
 
-    var hm = $('#heroMeta');
-    if (hm && DATA.items.length) {
-      hm.innerHTML = '<span class="dot"></span> 剧库已同步 · 共 ' + DATA.items.length + ' 部在库';
-    }
     var btn = $('#loadMore');
     if (btn) btn.addEventListener('click', function () { if (!btn.disabled) renderRail(false); });
   }
@@ -819,8 +817,6 @@
     .then(boot)
     .catch(function (err) {
       console.warn('[短剧之家] 剧库数据加载失败：', err);
-      var hm = $('#heroMeta');
-      if (hm) hm.innerHTML = '<span class="dot" style="background:#ff9f0a"></span> 剧库数据加载失败，请用本地服务器打开';
       boot({ items: [] });
     });
 
