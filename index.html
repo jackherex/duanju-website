@@ -530,7 +530,7 @@
             <li>批量下载</li>
             <li>WebDAV 同步</li>
           </ul>
-          <a class="btn btn--primary dev__btn" id="devPhoneBtn" href="https://github.com/jackherex/duanjuapp-release/releases/latest" target="_blank" rel="noopener">前往下载</a>
+          <a class="btn btn--primary dev__btn" id="devPhoneBtn" href="https://github.com/jackherex/duanjuzhijia-down-phone/releases/latest" target="_blank" rel="noopener">前往下载</a>
           <div class="dev__meta" id="devPhoneMeta">APK · 约 30.1 MB</div>
         </div>
         <div class="dev reveal spot tilt" data-delay="1">
@@ -548,7 +548,7 @@
             <li>离线弹幕</li>
             <li>WebDAV 同步</li>
           </ul>
-          <a class="btn btn--primary dev__btn" id="devPcBtn" href="https://github.com/jackherex/duanjuapp-release/releases/latest" target="_blank" rel="noopener">前往下载</a>
+          <a class="btn btn--primary dev__btn" id="devPcBtn" href="https://github.com/jackherex/duanjuzhijia-down-pc/releases/latest" target="_blank" rel="noopener">前往下载</a>
           <div class="dev__meta" id="devPcMeta">ZIP · 约 90.7 MB</div>
         </div>
         <div class="dev reveal spot tilt" data-delay="2">
@@ -566,7 +566,7 @@
             <li>无感加载下集</li>
             <li>离线弹幕</li>
           </ul>
-          <a class="btn btn--primary dev__btn" id="devTvBtn" href="https://github.com/jackherex/duanjuapp-release/releases/latest" target="_blank" rel="noopener">前往下载</a>
+          <a class="btn btn--primary dev__btn" id="devTvBtn" href="https://github.com/jackherex/duanjuzhijia-down-tv/releases/latest" target="_blank" rel="noopener">前往下载</a>
           <div class="dev__meta" id="devTvMeta">APK · 按需发布</div>
         </div>
       </div>
@@ -636,7 +636,7 @@
           <summary>TV 盒子版怎么找不到安装包？<span class="faq__sign"></span></summary>
           <div class="faq__body">
             TV 盒子版是独立维护的一条线，<b>只在确实有更新时才发布安装包</b>，所以最新版本的发布页上可能没有它。
-            可以点开<a href="https://github.com/jackherex/duanjuapp-release/releases" target="_blank" rel="noopener">全部版本列表</a>
+            可以点开<a href="https://github.com/jackherex/duanjuzhijia-down-phone/releases" target="_blank" rel="noopener">全部版本列表</a>
             往回翻，找带 TV 包的历史版本。急着看的话，用手机版投屏到电视是更省事的选择。
           </div>
         </details>
@@ -666,6 +666,41 @@
   </div>
 </footer>
 
-<script src="js/app.js?v=18"></script>
+<script src="js/app.js?v=19"></script>
+
+<!--
+  版本自检：让「改了但用户看不到」这件事自动消失
+
+  问题：GitHub Pages 给 HTML **和**带 ?v= 的资源都发 Cache-Control: max-age=600。
+  用户刷新时浏览器很可能直接吃缓存里的旧 HTML —— 而那份 HTML 指向的是
+  **旧的 ?v=N**，于是 CSS/JS 也是旧的。表现就是「明明改了却看起来没变」。
+
+  做法：用 no-store 拉一个极小的 version.json，与本页写死的 BUILD 比对。
+  不一致就带 ?_b=<build> 重新加载一次 —— 这个新 URL 不在浏览器也不在 CDN 缓存里，
+  必然取到最新。
+
+  ⚠️ 防死循环：用 sessionStorage 记下本次会话已纠正到的版本，
+     只有当「页面 BUILD ≠ 已纠正版本」时才重载，一次更新最多重载一次。
+  ⚠️ 每次改动 index.html / css / js 后，**必须同时**把 BUILD 和 version.json 的
+     build 一起 +1，否则这个自检不会生效（也不会出错，只是不生效）。
+-->
+<script>
+(function () {
+  var BUILD = 'b2';
+  var KEY = '_siteBuild';
+  try {
+    if (sessionStorage.getItem(KEY) === BUILD) return;   // 本次会话已是最新
+  } catch (e) {}
+  fetch('version.json', { cache: 'no-store' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (v) {
+      if (!v || !v.build || v.build === BUILD) return;
+      try { sessionStorage.setItem(KEY, v.build); } catch (e) {}
+      location.replace(
+        location.pathname + '?_b=' + encodeURIComponent(v.build) + location.hash);
+    })
+    .catch(function () {});                              // 拿不到就正常显示，不打扰
+})();
+</script>
 </body>
 </html>

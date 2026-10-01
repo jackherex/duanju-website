@@ -8,19 +8,39 @@
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
   /* ---------- 发布通道 ----------
-     下载按钮统一跳到 GitHub Release 页：
-       · releases/latest —— 自动跳转到最新版本，发新版后这里不用改
-       · releases        —— 全部版本列表，方便翻历史 / 找 TV 包
-     因此官网上永远指向最新版，维护成本为零。 */
+     ⚠️ 三个端是**各自独立发版**的，仓库与版本号都不同步：
+         手机 → duanjuzhijia-down-phone  (v1.0.19+20, arm64-v8a apk)
+         电脑 → duanjuzhijia-down-pc     (v1.0.19+20, windows-x64 zip)
+         TV   → duanjuzhijia-down-tv     (v1.0.9+10,  armeabi-v7a apk)
+       以前三个按钮都指向同一个 duanjuzhijia-release，
+       TV 用户点进去拿到的会是手机版包。现在按端分开。
+
+     · releases/latest —— 自动跳最新版，发新版后这里不用改
+     · releases        —— 全部版本列表，方便翻历史
+     ⚠️ 改仓库名时 repo / latest / all 三处要一起改，
+        并且 index.html 里对应的 href 硬编码也要同步（无 JS 时的兜底）。 */
   var RELEASE = {
-    repo: 'https://github.com/jackherex/duanjuapp-release',
-    latest: 'https://github.com/jackherex/duanjuapp-release/releases/latest',
-    all: 'https://github.com/jackherex/duanjuapp-release/releases',
-    // 仅用于展示的参考信息，不影响下载去向
-    version: 'v1.0.18+19',
-    updated: '2026-10-01',
-    androidSize: '30.1 MB',
-    windowsSize: '90.7 MB'
+    phone: {
+      repo: 'https://github.com/jackherex/duanjuzhijia-down-phone',
+      latest: 'https://github.com/jackherex/duanjuzhijia-down-phone/releases/latest',
+      all: 'https://github.com/jackherex/duanjuzhijia-down-phone/releases',
+      version: 'v1.0.19+20',
+      size: '30.1 MB'
+    },
+    pc: {
+      repo: 'https://github.com/jackherex/duanjuzhijia-down-pc',
+      latest: 'https://github.com/jackherex/duanjuzhijia-down-pc/releases/latest',
+      all: 'https://github.com/jackherex/duanjuzhijia-down-pc/releases',
+      version: 'v1.0.19+20',
+      size: '90.7 MB'
+    },
+    tv: {
+      repo: 'https://github.com/jackherex/duanjuzhijia-down-tv',
+      latest: 'https://github.com/jackherex/duanjuzhijia-down-tv/releases/latest',
+      all: 'https://github.com/jackherex/duanjuzhijia-down-tv/releases',
+      version: 'v1.0.9+10',
+      size: '38.2 MB'
+    }
   };
 
   /* ---------- 导航 ---------- */
@@ -867,18 +887,18 @@
       el.rel = 'noopener';
     }
 
-    // 手机 / 电脑 / TV：统一直达最新版发布页
-    link($('#devPhoneBtn'), RELEASE.latest, true);
-    link($('#devPcBtn'), RELEASE.latest, true);
-    link($('#devTvBtn'), RELEASE.latest, true);
+    // 三个端各自指向自己的发布页（版本号不同步，不能共用）
+    link($('#devPhoneBtn'), RELEASE.phone.latest, true);
+    link($('#devPcBtn'), RELEASE.pc.latest, true);
+    link($('#devTvBtn'), RELEASE.tv.latest, true);
 
     var am = $('#devPhoneMeta');
-    if (am) am.textContent = 'APK · 约 ' + RELEASE.androidSize;
+    if (am) am.textContent = 'APK · 约 ' + RELEASE.phone.size;
     var wm = $('#devPcMeta');
-    if (wm) wm.textContent = 'ZIP · 约 ' + RELEASE.windowsSize;
+    if (wm) wm.textContent = 'ZIP · 约 ' + RELEASE.pc.size;
     // TV 包按需发布，不给具体体积，避免承诺一个不存在的文件
     var tm = $('#devTvMeta');
-    if (tm) tm.textContent = 'APK · 按需发布';
+    if (tm) tm.textContent = 'APK · 约 ' + RELEASE.tv.size;
   }
 
   /* ---------- 启动 ---------- */
