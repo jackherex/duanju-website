@@ -1,0 +1,466 @@
+{
+ "generated_at": "2026-10-01 11:11:47",
+ "source": "红果短剧",
+ "boards": [
+  {
+   "id": "hot-drama",
+   "name": "总热播榜",
+   "desc": "红果观看、互动等综合热度 · 每日更新",
+   "items": [
+    {
+     "rank": 1,
+     "id": "7690829699181710361",
+     "title": "重生！丑小鸭逆袭成了万人迷第三季",
+     "heat": "9896万热度",
+     "fav": "101.2万收藏",
+     "badge": "新剧",
+     "cover": "assets/covers/061ac7dbf893d62f.webp"
+    },
+    {
+     "rank": 2,
+     "id": "7689482965906099262",
+     "title": "大唐憨婿之我姐姐是太子妃第三季",
+     "heat": "7329万热度",
+     "fav": "40.8万收藏",
+     "badge": "新剧",
+     "cover": "assets/covers/46b63e48895fda8e.webp"
+    },
+    {
+     "rank": 3,
+     "id": "7687919221593885758",
+     "title": "二嫁有喜",
+     "heat": "7097万热度",
+     "fav": "105.8万收藏",
+     "badge": "新剧",
+     "cover": "assets/covers/fbaba13a3de0239a.webp"
+    },
+    {
+     "rank": 4,
+     "id": "7686894628578020414",
+     "title": "聚宝仙盆之杂灵根才是真BOSS第十二季",
+     "heat": "6946万热度",
+     "fav": "92.1万收藏",
+     "badge": "",
+     "cover": "assets/covers/062bcd8f85439f33.webp"
+    },
+    {
+     "rank": 5,
+     "id": "7686812666374933566",
+     "title": "绿意萌熹：蛙系萌娃闹翻忧郁老爸",
+     "heat": "6925万热度",
+     "fav": "156.3万收藏",
+     "badge": "",
+     "cover": "assets/covers/7eb54434e0689911.webp"
+    },
+    {
+     "rank": 6,
+     "id": "7688666572499471422",
+     "title": "穿越六零之我在山洞闷声发家",
+     "heat": "6718万热度",
+     "fav": "68万收藏",
+     "badge": "",
+     "cover": "assets/covers/2c31e465b26fa0b7.webp"
+    },
+    {
+     "rank": 7,
+     "id": "7688646466708966462",
+     "title": "家有五女，穿越来的他连夜搞事业啦",
+     "heat": "6688万热度",
+     "fav": "116.9万收藏",
+     "badge": "",
+     "cover": "assets/covers/fc84115e005717eb.webp"
+    },
+    {
+     "rank": 8,
+     "id": "7688558312157088793",
+     "title": "满院亲戚全是上古大妖第四季",
+     "heat": "6602万热度",
+     "fav": "61.7万收藏",
+     "badge": "",
+     "cover": "assets/covers/275bce72c10715c8.webp"
+    },
+    {
+     "rank": 9,
+     "id": "7686433880127048728",
+     "title": "乡下来的掌上明珠",
+     "heat": "6469万热度",
+     "fav": "224.6万收藏",
+     "badge": "",
+     "cover": "assets/covers/eae5c5de80baaedb.webp"
+    },
+    {
+     "rank": 10,
+     "id": "7688208873676622872",
+     "title": "夕阳红顶流，大爷大妈助我乐坛封神",
+     "heat": "6429万热度",
+     "fav": "104.3万收藏",
+     "badge": "",
+     "cover": "assets/covers/73e545c389601f8d.webp"
+    },
+    {
+     "rank": 11,
+     "id": "7684559889913351193",
+     "title": "蒙冤二十五年，归来举世皆惊",
+     "heat": "6382万热度",
+     "fav": "82.2万收藏",
+     "badge": "",
+     "cover": "assets/covers/6d110ca1325a981b.webp"
+    },
+    {
+     "rank": 12,
+     "id": "7686533063710346265",
+     "title": "亿万斯年",
+     "heat": "6322万热度",
+     "fav": "120.3万收藏",
+     "badge": "新剧",
+     "cover": "assets/covers/f0191e8c4593a081.webp"
+    }
+   ]
+  },
+  {
+   "id": "hot-real-drama",
+   "name": "真人剧榜",
+   "desc": "红果真人剧热播榜 · 每日更新",
+   "items": [
+    {
+     "rank": 1,
+     "id": "7687919221593885758",
+     "title": "二嫁有喜",
+     "heat": "7097万热度",
+     "fav": "105.8万收藏",
+     "badge": "新剧",
+     "cover": "assets/covers/fbaba13a3de0239a.webp"
+    },
+    {
+     "rank": 2,
+     "id": "7686533063710346265",
+     "title": "亿万斯年",
+     "heat": "6322万热度",
+     "fav": "120.3万收藏",
+     "badge": "新剧",
+     "cover": "assets/covers/f0191e8c4593a081.webp"
+    },
+    {
+     "rank": 3,
+     "id": "7686829679478590526",
+     "title": "千金归来，她爸专治不服",
+     "heat": "6088万热度",
+     "fav": "50万收藏",
+     "badge": "新剧",
+     "cover": "assets/covers/36f6706d4b7b54b2.webp"
+    },
+    {
+     "rank": 4,
+     "id": "7683196130645003288",
+     "title": "东北话事人",
+     "heat": "",
+     "fav": "151.1万收藏",
+     "badge": "新剧",
+     "cover": "assets/covers/f8dc1636ed095e48.webp"
+    },
+    {
+     "rank": 5,
+     "id": "7687901961542175768",
+     "title": "盛律师的离婚前规则",
+     "heat": "5944万热度",
+     "fav": "98.5万收藏",
+     "badge": "新剧",
+     "cover": "assets/covers/fa194aade77275b1.webp"
+    },
+    {
+     "rank": 6,
+     "id": "7687944734748199960",
+     "title": "重回婚闹那天，我救下了嫂子",
+     "heat": "5940万热度",
+     "fav": "45.4万收藏",
+     "badge": "新剧",
+     "cover": "assets/covers/abb8c996d6084af4.webp"
+    },
+    {
+     "rank": 7,
+     "id": "7682794121647377470",
+     "title": "女儿受辱，妈妈归来掀翻全场",
+     "heat": "5906万热度",
+     "fav": "59.1万收藏",
+     "badge": "新剧",
+     "cover": "assets/covers/d092f753781f6167.webp"
+    },
+    {
+     "rank": 8,
+     "id": "7684649550316833817",
+     "title": "东北婆婆，笑护全家",
+     "heat": "5879万热度",
+     "fav": "91.5万收藏",
+     "badge": "新剧",
+     "cover": "assets/covers/11fccb03965cd712.webp"
+    },
+    {
+     "rank": 9,
+     "id": "7685636273490365464",
+     "title": "Hello继承者",
+     "heat": "5667万热度",
+     "fav": "92.2万收藏",
+     "badge": "新剧",
+     "cover": "assets/covers/37ed535abe31abf7.webp"
+    },
+    {
+     "rank": 10,
+     "id": "7685350746975390744",
+     "title": "我的婆婆，我罩着",
+     "heat": "5648万热度",
+     "fav": "83.4万收藏",
+     "badge": "新剧",
+     "cover": "assets/covers/1889b04a5afff4b5.webp"
+    },
+    {
+     "rank": 11,
+     "id": "7686783287322233880",
+     "title": "月落渔乡海上明",
+     "heat": "5566万热度",
+     "fav": "34万收藏",
+     "badge": "新剧",
+     "cover": ""
+    },
+    {
+     "rank": 12,
+     "id": "7689037887165172798",
+     "title": "花归锦宫城",
+     "heat": "5504万热度",
+     "fav": "25.2万收藏",
+     "badge": "新剧",
+     "cover": ""
+    }
+   ]
+  },
+  {
+   "id": "hot-comic-drama",
+   "name": "漫剧榜",
+   "desc": "红果漫剧热播榜 · 每日更新",
+   "items": [
+    {
+     "rank": 1,
+     "id": "7690829699181710361",
+     "title": "重生！丑小鸭逆袭成了万人迷第三季",
+     "heat": "9896万热度",
+     "fav": "101.2万收藏",
+     "badge": "新剧",
+     "cover": "assets/covers/061ac7dbf893d62f.webp"
+    },
+    {
+     "rank": 2,
+     "id": "7686894628578020414",
+     "title": "聚宝仙盆之杂灵根才是真BOSS第十二季",
+     "heat": "6946万热度",
+     "fav": "92.1万收藏",
+     "badge": "",
+     "cover": "assets/covers/062bcd8f85439f33.webp"
+    },
+    {
+     "rank": 3,
+     "id": "7688646466708966462",
+     "title": "家有五女，穿越来的他连夜搞事业啦",
+     "heat": "6688万热度",
+     "fav": "116.9万收藏",
+     "badge": "",
+     "cover": "assets/covers/fc84115e005717eb.webp"
+    },
+    {
+     "rank": 4,
+     "id": "7688558312157088793",
+     "title": "满院亲戚全是上古大妖第四季",
+     "heat": "6602万热度",
+     "fav": "61.7万收藏",
+     "badge": "",
+     "cover": "assets/covers/275bce72c10715c8.webp"
+    },
+    {
+     "rank": 5,
+     "id": "7686433880127048728",
+     "title": "乡下来的掌上明珠",
+     "heat": "6469万热度",
+     "fav": "224.5万收藏",
+     "badge": "",
+     "cover": "assets/covers/eae5c5de80baaedb.webp"
+    },
+    {
+     "rank": 6,
+     "id": "7688372772879223870",
+     "title": "谁让这个文盲修仙的第四季",
+     "heat": "6297万热度",
+     "fav": "124.2万收藏",
+     "badge": "",
+     "cover": "assets/covers/38d4806cb2505cd2.webp"
+    },
+    {
+     "rank": 7,
+     "id": "7690059679510055960",
+     "title": "我都元婴期了，你跟我说开学第二季",
+     "heat": "6190万热度",
+     "fav": "34.6万收藏",
+     "badge": "新剧",
+     "cover": "assets/covers/928a2fe84112de21.webp"
+    },
+    {
+     "rank": 8,
+     "id": "7679411071647484953",
+     "title": "废物垫底皇子，反倒成为千古一帝",
+     "heat": "6153万热度",
+     "fav": "417万收藏",
+     "badge": "",
+     "cover": "assets/covers/beb626d26e8968a2.webp"
+    },
+    {
+     "rank": 9,
+     "id": "7687961499481934910",
+     "title": "我本是魔之阴阳魔帝",
+     "heat": "6128万热度",
+     "fav": "166.1万收藏",
+     "badge": "",
+     "cover": "assets/covers/c176fb7f8756bcea.webp"
+    },
+    {
+     "rank": 10,
+     "id": "7687570310979128382",
+     "title": "贵妃将我赎身钱送乞丐，重生后我夺回一切",
+     "heat": "6093万热度",
+     "fav": "95.3万收藏",
+     "badge": "",
+     "cover": "assets/covers/91d8f6ed5be375b6.webp"
+    },
+    {
+     "rank": 11,
+     "id": "7687179113462778904",
+     "title": "凡人百世书第七季",
+     "heat": "6087万热度",
+     "fav": "89.6万收藏",
+     "badge": "",
+     "cover": "assets/covers/9ca30a9e3e93f019.webp"
+    },
+    {
+     "rank": 12,
+     "id": "7688552131053227032",
+     "title": "桃源十年归，初恋变权臣",
+     "heat": "6073万热度",
+     "fav": "185.6万收藏",
+     "badge": "",
+     "cover": "assets/covers/3321c890bd1b97ac.webp"
+    }
+   ]
+  },
+  {
+   "id": "hot-ai-drama",
+   "name": "AI剧榜",
+   "desc": "红果 AI 剧热播榜 · 每日更新",
+   "items": [
+    {
+     "rank": 1,
+     "id": "7689482965906099262",
+     "title": "大唐憨婿之我姐姐是太子妃第三季",
+     "heat": "7329万热度",
+     "fav": "40.7万收藏",
+     "badge": "新剧",
+     "cover": "assets/covers/46b63e48895fda8e.webp"
+    },
+    {
+     "rank": 2,
+     "id": "7686812666374933566",
+     "title": "绿意萌熹：蛙系萌娃闹翻忧郁老爸",
+     "heat": "6925万热度",
+     "fav": "156.3万收藏",
+     "badge": "",
+     "cover": "assets/covers/7eb54434e0689911.webp"
+    },
+    {
+     "rank": 3,
+     "id": "7688666572499471422",
+     "title": "穿越六零之我在山洞闷声发家",
+     "heat": "6718万热度",
+     "fav": "68万收藏",
+     "badge": "",
+     "cover": "assets/covers/2c31e465b26fa0b7.webp"
+    },
+    {
+     "rank": 4,
+     "id": "7688208873676622872",
+     "title": "夕阳红顶流，大爷大妈助我乐坛封神",
+     "heat": "6429万热度",
+     "fav": "104.3万收藏",
+     "badge": "",
+     "cover": "assets/covers/73e545c389601f8d.webp"
+    },
+    {
+     "rank": 5,
+     "id": "7684559889913351193",
+     "title": "蒙冤二十五年，归来举世皆惊",
+     "heat": "6382万热度",
+     "fav": "82.2万收藏",
+     "badge": "",
+     "cover": "assets/covers/6d110ca1325a981b.webp"
+    },
+    {
+     "rank": 6,
+     "id": "7688726871877356606",
+     "title": "绿意萌熹：蛙系萌娃闹翻忧郁老爸2",
+     "heat": "6250万热度",
+     "fav": "59.9万收藏",
+     "badge": "",
+     "cover": "assets/covers/dd9f4937a440aba2.webp"
+    },
+    {
+     "rank": 7,
+     "id": "7688352674999176254",
+     "title": "总裁是我前女友",
+     "heat": "6146万热度",
+     "fav": "48.7万收藏",
+     "badge": "",
+     "cover": "assets/covers/fa3fb17005842daa.webp"
+    },
+    {
+     "rank": 8,
+     "id": "7686430794469887001",
+     "title": "持械入宋：第六季",
+     "heat": "5997万热度",
+     "fav": "57.2万收藏",
+     "badge": "",
+     "cover": "assets/covers/e3e105fef755d569.webp"
+    },
+    {
+     "rank": 9,
+     "id": "7688338785091718206",
+     "title": "结账时我摊牌了",
+     "heat": "5933万热度",
+     "fav": "38万收藏",
+     "badge": "",
+     "cover": "assets/covers/36f73acea0dbcee6.webp"
+    },
+    {
+     "rank": 10,
+     "id": "7687650704235711513",
+     "title": "招惹督军，他高调求娶我为妻",
+     "heat": "5880万热度",
+     "fav": "47.3万收藏",
+     "badge": "",
+     "cover": "assets/covers/c53b9c43955f0dbb.webp"
+    },
+    {
+     "rank": 11,
+     "id": "7686713711553170494",
+     "title": "乐乐来啦之调皮乐宝大佬爹",
+     "heat": "5874万热度",
+     "fav": "90.7万收藏",
+     "badge": "",
+     "cover": "assets/covers/f2014da367976452.webp"
+    },
+    {
+     "rank": 12,
+     "id": "7688564512806423576",
+     "title": "终于从修仙回到都市，坏消息修\u0000\u0000为没了",
+     "heat": "5845万热度",
+     "fav": "38.8万收藏",
+     "badge": "",
+     "cover": ""
+    }
+   ]
+  }
+ ]
+}
