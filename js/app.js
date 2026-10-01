@@ -176,6 +176,168 @@
     }, { passive: true });
   }
 
+  /* ---------- 滚动进度条 ---------- */
+  function initProgress() {
+    var bar = $('#navProgress');
+    if (!bar) return;
+    var tick = function () {
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      var p = h > 0 ? Math.min(1, Math.max(0, window.scrollY / h)) : 0;
+      bar.style.width = (p * 100).toFixed(2) + '%';
+    };
+    tick();
+    window.addEventListener('scroll', tick, { passive: true });
+    window.addEventListener('resize', tick);
+  }
+
+  /* ---------- 章节序号导航 ----------
+     跟随 7 个功能区（#f-*）与三端区，右侧悬浮显示当前进度。 */
+  function initChapNav() {
+    var wrap = $('#chapNav');
+    if (!wrap) return;
+    var SECS = ['#f-next', '#f-danmaku', '#f-batch', '#f-rank',
+                '#f-season', '#f-sync', '#f-hq'];
+
+    var items = [];
+    SECS.forEach(function (sel, i) {
+      var sec = $(sel);
+      if (!sec) return;
+      var a = document.createElement('a');
+      a.className = 'chap__i';
+      a.href = sel;
+      a.setAttribute('aria-label', '第 ' + (i + 1) + ' 个功能');
+      a.innerHTML = '<span>0' + (i + 1) + '</span><i></i>';
+      wrap.appendChild(a);
+      items.push({ el: a, sec: sec });
+    });
+    if (!items.length) return;
+
+    var active = -1;
+    var tick = function () {
+      var mid = window.scrollY + window.innerHeight * 0.42;
+      var next = -1;
+      items.forEach(function (it, i) {
+        var top = it.sec.offsetTop;
+        var bot = top + it.sec.offsetHeight;
+        if (mid >= top && mid < bot) next = i;
+      });
+      if (next === active) return;
+      active = next;
+      items.forEach(function (it, i) { it.el.classList.toggle('on', i === active); });
+      // 只有落在功能区里才显示这条导航
+      wrap.classList.toggle('on', active !== -1);
+    };
+    tick();
+    window.addEventListener('scroll', tick, { passive: true });
+    window.addEventListener('resize', tick);
+  }
+
+  /* ---------- 鼠标跟随光晕 ----------
+     只更新 CSS 变量，不做任何布局读取（rect 在进入时读一次并缓存）。 */
+  function initSpot() {
+    if (!window.matchMedia || window.matchMedia('(hover: none)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    $$('.spot').forEach(function (card) {
+      var rect = null;
+      card.addEventListener('mouseenter', function () {
+        rect = card.getBoundingClientRect();
+      });
+      card.addEventListener('mousemove', function (e) {
+        if (!rect) rect = card.getBoundingClientRect();
+        card.style.setProperty('--gx', (e.clientX - rect.left) + 'px');
+        card.style.setProperty('--gy', (e.clientY - rect.top) + 'px');
+      }, { passive: true });
+      card.addEventListener('mouseleave', function () { rect = null; });
+    });
+  }
+
+  /* ---------- 3D 微倾斜 ---------- */
+  function initTilt() {
+    if (!window.matchMedia || window.matchMedia('(hover: none)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var MAX = 4.2;   // 最大偏转角度，再大就有「廉价视差」的味道了
+    $$('.tilt').forEach(function (card) {
+      var rect = null;
+      var raf = 0;
+      var apply = function (rx, ry) {
+        card.style.setProperty('--rx', rx.toFixed(2));
+        card.style.setProperty('--ry', ry.toFixed(2));
+      };
+      card.addEventListener('mouseenter', function () {
+        rect = card.getBoundingClientRect();
+        card.classList.add('tilting');
+      });
+      card.addEventListener('mousemove', function (e) {
+        if (raf) return;
+        raf = requestAnimationFrame(function () {
+          raf = 0;
+          if (!rect) rect = card.getBoundingClientRect();
+          var px = (e.clientX - rect.left) / rect.width - 0.5;
+          var py = (e.clientY - rect.top) / rect.height - 0.5;
+          apply(py * MAX * 2, px * MAX * 2);
+        });
+      }, { passive: true });
+      card.addEventListener('mouseleave', function () {
+        card.classList.remove('tilting');
+        rect = null;
+        apply(0, 0);
+      });
+    });
+  }
+
+  /* ---------- 标题逐字浮现 ----------
+     把标题按「不破坏换行」的方式拆成一个个 span。
+     中文逐字、英文按词，保持 .hero__title 这类 flex 两行结构的换行语义。 */
+  function initSplit() {
+    var els = $$('[data-split]');
+    if (!els.length) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      els.forEach(function (el) { el.classList.add('split', 'in'); });
+      return;
+    }
+
+    els.forEach(function (el) {
+      // 递归处理：只拆文本节点，保留 <br> 与已有标签结构
+      var walk = function (node, sink) {
+        Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+          if (n.nodeType === 3) {
+            var parts = n.nodeValue.match(/[\u4e00-\u9fa5]|[A-Za-z0-9'’]+|\s+|[^\s]/g) || [];
+            parts.forEach(function (p) {
+              if (/^\s+$/.test(p)) { sink.appendChild(document.createTextNode(p)); return; }
+              var s = document.createElement('span');
+              s.className = 'w';
+              s.textContent = p;
+              sink.appendChild(s);
+            });
+          } else if (n.nodeType === 1) {
+            var clone = n.cloneNode(false);
+            sink.appendChild(clone);
+            walk(n, clone);
+          }
+        });
+      };
+      var frag = document.createDocumentFragment();
+      walk(el, frag);
+      el.innerHTML = '';
+      el.appendChild(frag);
+      el.classList.add('split');
+
+      // 每个字按顺序错峰
+      $$('.w', el).forEach(function (w, i) {
+        w.style.transitionDelay = (i * 0.032).toFixed(3) + 's';
+      });
+    });
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.2 });
+    els.forEach(function (el) { io.observe(el); });
+  }
+
   /* ---------- 数字动画 ---------- */
   function initCounters() {
     var io = new IntersectionObserver(function (entries) {
@@ -714,6 +876,11 @@
     fillRelease();
     initReveal();
     initCounters();
+    initProgress();
+    initChapNav();
+    initSpot();
+    initTilt();
+    initSplit();
   }
 
   initNav();

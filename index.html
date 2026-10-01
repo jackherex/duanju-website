@@ -7,7 +7,7 @@
 <title>短剧之家 — 把好剧，装进口袋</title>
 <meta name="description" content="短剧之家 · 海量短剧免费观看。无感加载下集、离线弹幕、批量下载、WebDAV 全端同步播放记录，手机、电脑与电视三端通用。">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-<link rel="stylesheet" href="css/main.css?v=14">
+<link rel="stylesheet" href="css/main.css?v=16">
 </head>
 <body>
 
@@ -34,7 +34,11 @@
       <span></span><span></span>
     </button>
   </div>
+  <div class="nav__progress" id="navProgress" aria-hidden="true"></div>
 </header>
+
+<!-- 章节序号导航：滚动到功能区时在右侧显示 / 07 -->
+<nav class="chap" id="chapNav" aria-hidden="true"></nav>
 
 <main id="top">
 
@@ -43,7 +47,7 @@
     <div class="hero__glow" aria-hidden="true"></div>
     <div class="hero__inner">
       <p class="hero__eyebrow reveal">全新 v2 · 手机 / 电脑 / 电视三端</p>
-      <h1 class="hero__title reveal" data-delay="1">
+      <h1 class="hero__title reveal" data-delay="1" data-split>
         <span>把好剧</span>
         <span class="hero__title-em">装进口袋</span>
       </h1>
@@ -69,14 +73,14 @@
   <!-- ============ 独家功能 总览 ============ -->
   <section class="excl-intro" id="exclusive">
     <div class="wrap">
-      <div class="sec-head reveal">
+      <div class="sec-head sec-head--filet reveal">
         <p class="excl-eyebrow">独家功能</p>
         <h2 class="sec-title">这七件事，<br>别家做不了</h2>
         <p class="sec-sub">不是花哨的噱头，是每天都会用到的实在东西。</p>
       </div>
 
       <div class="excl-grid">
-        <a class="excl reveal" href="#f-next">
+        <a class="excl reveal spot tilt" href="#f-next">
           <span class="excl__no">01</span>
           <h3 class="excl__t">无感加载下集</h3>
           <p class="excl__d">还在看这集，下一集已经在后台准备好了。播完自动接上，中间没有等待圈。</p>
@@ -84,7 +88,7 @@
             <svg viewBox="0 0 12 12" width="12" height="12"><path d="M4.3 2.2 8.5 6l-4.2 3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
         </a>
-        <a class="excl reveal" data-delay="1" href="#f-danmaku">
+        <a class="excl reveal spot tilt" data-delay="1" href="#f-danmaku">
           <span class="excl__no">02</span>
           <h3 class="excl__t">弹幕看得更爽</h3>
           <p class="excl__d">完整弹幕引擎，支持屏蔽词过滤、透明度调节，追剧的时候有人陪着一起笑。</p>
@@ -92,7 +96,7 @@
             <svg viewBox="0 0 12 12" width="12" height="12"><path d="M4.3 2.2 8.5 6l-4.2 3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
         </a>
-        <a class="excl reveal" data-delay="2" href="#f-batch">
+        <a class="excl reveal spot tilt" data-delay="2" href="#f-batch">
           <span class="excl__no">03</span>
           <h3 class="excl__t">批量下载带弹幕</h3>
           <p class="excl__d">整季一键缓存，视频和弹幕一起存下来。断网也能看，而且弹幕照样飘。</p>
@@ -100,7 +104,7 @@
             <svg viewBox="0 0 12 12" width="12" height="12"><path d="M4.3 2.2 8.5 6l-4.2 3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
         </a>
-        <a class="excl reveal" data-delay="3" href="#f-rank">
+        <a class="excl reveal spot tilt" data-delay="3" href="#f-rank">
           <span class="excl__no">04</span>
           <h3 class="excl__t">多个热播榜单</h3>
           <p class="excl__d">总热播榜、真人剧榜、漫剧榜、AI 剧榜，每天更新。不知道看什么的时候，跟着榜走就行。</p>
@@ -108,7 +112,7 @@
             <svg viewBox="0 0 12 12" width="12" height="12"><path d="M4.3 2.2 8.5 6l-4.2 3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
         </a>
-        <a class="excl reveal" data-delay="4" href="#f-season">
+        <a class="excl reveal spot tilt" data-delay="4" href="#f-season">
           <span class="excl__no">05</span>
           <h3 class="excl__t">查全季 · 自动连播</h3>
           <p class="excl__d">一部剧有很多季，它自己会找。看到最后一集，还会顺手问你要不要接着看下一季。</p>
@@ -116,7 +120,7 @@
             <svg viewBox="0 0 12 12" width="12" height="12"><path d="M4.3 2.2 8.5 6l-4.2 3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
         </a>
-        <a class="excl reveal" data-delay="5" href="#f-sync">
+        <a class="excl reveal spot tilt" data-delay="5" href="#f-sync">
           <span class="excl__no">06</span>
           <h3 class="excl__t">全端播放记录同步</h3>
           <p class="excl__d">接上你自己的 WebDAV，手机上看到第 17 集，电脑打开就接着播。不经过任何第三方服务器。</p>
@@ -124,7 +128,7 @@
             <svg viewBox="0 0 12 12" width="12" height="12"><path d="M4.3 2.2 8.5 6l-4.2 3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
         </a>
-        <a class="excl reveal excl--wide" data-delay="6" href="#f-hq">
+        <a class="excl reveal excl--wide spot tilt" data-delay="6" href="#f-hq">
           <span class="excl__no">07</span>
           <h3 class="excl__t">电脑版画质增强</h3>
           <p class="excl__d">内置实时神经超分，1080P 片源最高推到 4K。逐帧重建线条，不是粗暴放大。</p>
@@ -141,7 +145,7 @@
     <div class="wrap feature__wrap">
       <div class="feature__copy">
         <p class="feature__eyebrow">01 · 无感加载下集</p>
-        <h2 class="feature__title reveal" data-delay="1">下一集，<br>早在等你</h2>
+        <h2 class="feature__title reveal" data-delay="1" data-split>下一集，<br>早在等你</h2>
         <p class="feature__text reveal" data-delay="2">
           播放器会根据网速和你的观看进度，提前把下一集的视频拉到本地缓冲。
           这一集刚结束，下一集已经就绪 —— 没有转圈，没有加载页。
@@ -152,7 +156,7 @@
           <li><b>弱网兜底</b>检测到网速差自动跳过预载，不拖累当前集</li>
         </ul>
       </div>
-      <div class="feature__visual reveal" data-delay="2">
+      <div class="feature__visual reveal wipe" data-delay="2">
         <div class="nextmock">
           <div class="nextmock__frame">
             <img id="nextCover" alt="" loading="lazy">
@@ -189,7 +193,7 @@
     <div class="wrap feature__wrap">
       <div class="feature__copy">
         <p class="feature__eyebrow">02 · 弹幕</p>
-        <h2 class="feature__title reveal" data-delay="1">一个人看，<br>也不孤单</h2>
+        <h2 class="feature__title reveal" data-delay="1" data-split>一个人看，<br>也不孤单</h2>
         <p class="feature__text reveal" data-delay="2">
           完整的弹幕系统，按时间轴精准对齐。想安静看就一键关掉，
           或者把不想看到的词加进屏蔽名单 —— 界面干净，爽感自己定。
@@ -200,7 +204,7 @@
           <li><b>随时开关</b>一键隐藏或展开，不影响播放流畅度</li>
         </ul>
       </div>
-      <div class="feature__visual reveal" data-delay="2">
+      <div class="feature__visual reveal wipe" data-delay="2">
         <div class="dmmock">
           <div class="dmmock__screen" id="dmmockScreen">
             <img id="dmCover" alt="" loading="lazy">
@@ -223,7 +227,7 @@
     <div class="wrap feature__wrap">
       <div class="feature__copy">
         <p class="feature__eyebrow">03 · 批量下载</p>
-        <h2 class="feature__title reveal" data-delay="1">整季存下来，<br>弹幕一起走</h2>
+        <h2 class="feature__title reveal" data-delay="1" data-split>整季存下来，<br>弹幕一起走</h2>
         <p class="feature__text reveal" data-delay="2">
           选中整季，剩下交给它。视频和弹幕打包存在本地，
           飞机上、地铁里、回老家的路上 —— 断网也能看，弹幕照样飘。
@@ -234,7 +238,7 @@
           <li><b>画质自选</b>省流 / 标清 / 高清，按你的流量和存储挑</li>
         </ul>
       </div>
-      <div class="feature__visual reveal" data-delay="2">
+      <div class="feature__visual reveal wipe" data-delay="2">
         <div class="dlmock">
           <div class="dlmock__head">
             <span class="dlmock__ic">
@@ -264,7 +268,7 @@
     <div class="wrap feature__wrap">
       <div class="feature__copy">
         <p class="feature__eyebrow">04 · 热播榜单</p>
-        <h2 class="feature__title reveal" data-delay="1">不知道看什么，<br>就跟着榜走</h2>
+        <h2 class="feature__title reveal" data-delay="1" data-split>不知道看什么，<br>就跟着榜走</h2>
         <p class="feature__text reveal" data-delay="2">
           总热播榜、真人剧榜、漫剧榜、AI 剧榜 —— 四个维度各有一份榜。
           热度、收藏、更新时间都摆在明面上，每天跟着最新数据走。
@@ -277,7 +281,7 @@
         </ul>
       </div>
 
-      <div class="feature__visual reveal" data-delay="2">
+      <div class="feature__visual reveal wipe" data-delay="2">
         <div class="rankmock">
           <div class="rankmock__head">
             <span class="rankmock__ic">
@@ -303,7 +307,7 @@
     <div class="wrap feature__wrap">
       <div class="feature__copy">
         <p class="feature__eyebrow">05 · 查全季 · 自动连播</p>
-        <h2 class="feature__title reveal" data-delay="1">看完这季，<br>还有下一季</h2>
+        <h2 class="feature__title reveal" data-delay="1" data-split>看完这季，<br>还有下一季</h2>
         <p class="feature__text reveal" data-delay="2">
           很多短剧一部拍好几季，标题里的季号藏在名字最后。
           短剧之家会自动把同一部剧的各季归到一起 —— 你不必自己猜、自己搜。
@@ -316,7 +320,7 @@
         </ul>
       </div>
 
-      <div class="feature__visual reveal" data-delay="2">
+      <div class="feature__visual reveal wipe" data-delay="2">
         <div class="seasmock">
           <div class="seasmock__head">
             <div class="seasmock__name">大唐憨婿<span>· 共 3 季</span></div>
@@ -342,7 +346,7 @@
     <div class="wrap feature__wrap">
       <div class="feature__copy">
         <p class="feature__eyebrow">06 · 播放记录同步</p>
-        <h2 class="feature__title reveal" data-delay="1">看到哪了，<br>自己记得</h2>
+        <h2 class="feature__title reveal" data-delay="1" data-split>看到哪了，<br>自己记得</h2>
         <p class="feature__text reveal" data-delay="2">
           不用注册账号，不用登录。接上你自己的 WebDAV ——
           群晖、坚果云、OpenList 都行 —— 手机和电脑的播放进度自动对齐，
@@ -355,7 +359,7 @@
           <li><b>多机隔离</b>一个账号带多台设备时，可以分空间互不干扰</li>
         </ul>
       </div>
-      <div class="feature__visual reveal" data-delay="2">
+      <div class="feature__visual reveal wipe" data-delay="2">
         <div class="syncmock">
           <div class="syncmock__node syncmock__node--phone">
             <span class="syncmock__ico">
@@ -399,7 +403,7 @@
     <div class="wrap feature__wrap">
       <div class="feature__copy">
         <p class="feature__eyebrow">07 · 画质增强 · 电脑版</p>
-        <h2 class="feature__title reveal" data-delay="1">1080，<br>也能看出 4K 的样子</h2>
+        <h2 class="feature__title reveal" data-delay="1" data-split>1080，<br>也能看出 4K 的样子</h2>
         <p class="feature__text reveal" data-delay="2">
           电脑版内置实时超分引擎。1080P 的片源喂进去，输出分辨率最高推到
           4K —— 不是简单拉大，而是逐帧重建线条和纹理，画面越糊越明显。
@@ -412,7 +416,7 @@
         </ul>
       </div>
 
-      <div class="feature__visual reveal" data-delay="2">
+      <div class="feature__visual reveal wipe" data-delay="2">
         <div class="hqmock">
           <div class="hqmock__bar">
             <span class="hqmock__pill hqmock__pill--live">
@@ -458,12 +462,12 @@
   <!-- ============ 三端 ============ -->
   <section class="devices" id="devices">
     <div class="wrap">
-      <div class="sec-head reveal">
+      <div class="sec-head sec-head--filet reveal">
         <h2 class="sec-title">手机、电脑和电视，<br>都给你准备好了</h2>
         <p class="sec-sub">同一套内核，三种屏幕的体验各自打磨。</p>
       </div>
       <div class="dev-grid dev-grid--3">
-        <div class="dev reveal">
+        <div class="dev reveal spot tilt">
           <div class="dev__art dev__art--phone">
             <svg viewBox="0 0 64 64" width="44" height="44" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="19" y="6" width="26" height="52" rx="5"/><path d="M28 12h8"/></svg>
           </div>
@@ -481,7 +485,7 @@
           <a class="btn btn--primary dev__btn" id="devPhoneBtn" href="https://github.com/jackson977800/duanjuapp-release/releases/latest" target="_blank" rel="noopener">前往下载</a>
           <div class="dev__meta" id="devPhoneMeta">APK · 约 30.1 MB</div>
         </div>
-        <div class="dev reveal" data-delay="1">
+        <div class="dev reveal spot tilt" data-delay="1">
           <div class="dev__art dev__art--pc">
             <svg viewBox="0 0 64 64" width="44" height="44" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="8" y="12" width="48" height="32" rx="3"/><path d="M24 52h16M32 44v8"/></svg>
           </div>
@@ -499,7 +503,7 @@
           <a class="btn btn--primary dev__btn" id="devPcBtn" href="https://github.com/jackson977800/duanjuapp-release/releases/latest" target="_blank" rel="noopener">前往下载</a>
           <div class="dev__meta" id="devPcMeta">ZIP · 约 90.7 MB</div>
         </div>
-        <div class="dev reveal" data-delay="2">
+        <div class="dev reveal spot tilt" data-delay="2">
           <div class="dev__art dev__art--tv">
             <svg viewBox="0 0 64 64" width="44" height="44" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="6" y="10" width="52" height="34" rx="3"/><path d="M22 52h20M32 44v8"/><path d="M20 6l-4 4M44 6l4 4" opacity=".55"/></svg>
           </div>
@@ -527,7 +531,7 @@
   <!-- ============ FAQ ============ -->
   <section class="faq" id="faq">
     <div class="wrap">
-      <div class="sec-head reveal">
+      <div class="sec-head sec-head--filet reveal">
         <h2 class="sec-title">常见问题</h2>
       </div>
       <div class="faq__list" id="faqList">
@@ -614,6 +618,6 @@
   </div>
 </footer>
 
-<script src="js/app.js?v=12"></script>
+<script src="js/app.js?v=14"></script>
 </body>
 </html>
