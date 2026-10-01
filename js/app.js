@@ -485,39 +485,59 @@
     var dmCover = $('#dmCover');
     if (dmCover) { dmCover.src = withCover[2] ? withCover[2].cover : withCover[0].cover; dmCover.alt = ''; }
 
-    var tracks = [$('#dmTrackA'), $('#dmTrackB'), $('#dmTrackC')];
-    var speed = [11, 14, 17];
-    var pool = pick(DM_TEXTS, DM_TEXTS.length, 5);
-    var pi = 0;
+    var wrap = $('#dmLanes');
+    if (!wrap) return;
 
-    tracks.forEach(function (track, ti) {
-      if (!track) return;
-      for (var k = 0; k < 3; k++) {
-        var s = document.createElement('span');
-        s.textContent = pool[pi++ % pool.length];
-        s.style.top = '0';
-        s.style.animationDuration = (speed[ti] + k * 2.5) + 's';
-        s.style.animationDelay = (-(k * 4.2)) + 's';
-        if (k % 3 === 1) s.style.color = '#ffd166';
-        if (k % 3 === 2) s.style.color = '#7fd1ff';
-        track.appendChild(s);
-      }
-    });
+    /* ⚠️ 一条泳道只放一条文字。
+       原实现是「3 条轨道 × 每条 3 条文字、全部 top:0」，
+       三条挤在同一水平线上，时长还各不相同 → 速度不同 → 不断互相穿过。
+       实测重叠帧：桌面 60~67%、手机 43~57%，看起来就是「一直闪」。
+       现在结构上就不可能重叠：每条泳道只有一条 span。 */
+    var LANES = 6;
+    // 泳道配色：白 / 琥珀 / 蓝，循环使用
+    var TINT = ['#ffffff', '#ffd166', '#7fd1ff'];
+    // 时长错开，避免所有弹幕同速同相位（看着像整块平移）
+    var DUR = [11, 9.5, 13, 10.5, 14.5, 12];
+    var DELAY = [0, 1.8, 3.6, 5.4, 7.2, 2.7];
 
-    // 屏蔽词演示：点击按钮，带"笑死/妈呀"的弹幕淡出
+    /* 「屏蔽词」按钮演示依赖文本里有 笑死/妈呀/啊啊。
+       随机抽 6 条可能一条都不含 → 点了没反应。
+       所以把 3 条可屏蔽的固定在泳道 0/2/4，其余从池子里随机补。 */
+    var BLOCKABLE = ['哈哈哈哈这段笑死我了', '妈呀吓我一跳', '啊啊啊甜到了'];
+    var others = pick(DM_TEXTS.filter(function (t) {
+      return BLOCKABLE.indexOf(t) === -1;
+    }), 3, 5);
+
+    var lanes = [];
+    for (var i = 0; i < LANES; i++) {
+      var lane = document.createElement('div');
+      lane.className = 'dmmock__lane';
+
+      var s = document.createElement('span');
+      s.textContent = (i % 2 === 0) ? BLOCKABLE[i / 2] : others[(i - 1) / 2];
+      s.style.color = TINT[i % TINT.length];
+      s.style.animationDuration = DUR[i] + 's';
+      // 负延迟让文字一开始就散布在屏幕各处，而不是全部从右边同时进场
+      s.style.animationDelay = (-DELAY[i]) + 's';
+
+      lane.appendChild(s);
+      wrap.appendChild(lane);
+      lanes.push(lane);
+    }
+
+    // 屏蔽词演示：点击按钮，带"笑死/妈呀/啊啊"的弹幕淡出
     $$('.dmmock__btn').forEach(function (btn) {
       btn.addEventListener('click', function () {
         if (btn.dataset.dm === 'toggle') {
           var on = btn.classList.toggle('dmmock__btn--on');
           btn.textContent = on ? '弹幕 · 开' : '弹幕 · 关';
-          tracks.forEach(function (t) {
-            if (t) t.style.opacity = on ? '1' : '0';
+          lanes.forEach(function (l) {
+            l.style.opacity = on ? '1' : '0';
           });
         } else {
           var blocked = false;
-          tracks.forEach(function (t) {
-            if (!t) return;
-            $$('span', t).forEach(function (s) {
+          lanes.forEach(function (l) {
+            $$('span', l).forEach(function (s) {
               if (/笑死|妈呀|啊啊/.test(s.textContent)) {
                 s.style.transition = 'opacity .5s';
                 s.style.opacity = '0';

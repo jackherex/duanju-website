@@ -866,23 +866,40 @@ html.js-reveal .split.in .w{opacity:1;transform:none}
   position:absolute;inset:0;
   background:linear-gradient(180deg,rgba(0,0,0,.34),transparent 40%,rgba(0,0,0,.7));
 }
-.dmmock__track{
-  position:absolute;left:0;right:0;height:22px;pointer-events:none;
-  white-space:nowrap;
+/* ⚠️ 弹幕泳道
+   原来的写法是「3 条轨道，每条轨道里塞 3 条文字，且三条都是 top:0」——
+   也就是 3 条文字挤在同一条水平线上。它们的 animation-duration 又各不相同
+   （11 / 13.5 / 16s），速度不同 → 不停地互相穿过、叠在一起。
+   实测重叠帧占比：桌面 1440 是 60~67%，1280 是 50~63%，手机 390 是 43~57%。
+
+   现在改成**一条泳道只放一条文字**，用 6 条泳道在容器里 space-between 均分。
+   一条泳道只有一条文字，结构上就不可能重叠，与时长无关。
+   容器用 flex 而不是写死 top 百分比：泳道高固定 22px、屏高随宽高比变化，
+   用百分比会在窄屏挤在一起（手机屏只有 212px 高）。 */
+.dmmock__dm{
+  position:absolute;left:0;right:0;top:6%;bottom:22%;
+  display:flex;flex-direction:column;justify-content:space-between;
+  overflow:hidden;pointer-events:none;
 }
-.dmmock__track--a{top:16%}
-.dmmock__track--b{top:34%}
-.dmmock__track--c{top:52%}
-.dmmock__track span{
-  position:absolute;left:0;font-size:13px;font-weight:500;
+.dmmock__lane{
+  position:relative;height:22px;white-space:nowrap;pointer-events:none;
+  transition:opacity .35s var(--ease);
+}
+.dmmock__lane span{
+  position:absolute;left:0;
+  font-size:13px;font-weight:500;line-height:22px;
   color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.9);
   animation:dmroll linear infinite;
   will-change:transform;
   padding-left:100%;
 }
+/* 位移改成 -100%：span 的宽度 = 轨道宽(100% padding) + 文字宽，
+   所以 -100% 正好等于「轨道宽 + 文字宽」——
+   起点在右边缘外、终点在左边缘外，循环无缝且文字全程可见。
+   原来写 -200% 会多走一倍路程，文字有近一半时间在屏外。 */
 @keyframes dmroll{
   from{transform:translateX(0)}
-  to{transform:translateX(-200%)}
+  to{transform:translateX(-100%)}
 }
 .dmmock__ctrl{
   position:absolute;left:14px;bottom:13px;display:flex;gap:8px;

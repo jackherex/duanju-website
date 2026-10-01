@@ -56,7 +56,7 @@
 }
 </script>
 
-<link rel="stylesheet" href="css/main.css?v=18">
+<link rel="stylesheet" href="css/main.css?v=19">
 </head>
 <body>
 
@@ -258,9 +258,8 @@
           <div class="dmmock__screen" id="dmmockScreen">
             <img id="dmCover" alt="" loading="lazy">
             <div class="dmmock__scrim"></div>
-            <div class="dmmock__track dmmock__track--a" id="dmTrackA"></div>
-            <div class="dmmock__track dmmock__track--b" id="dmTrackB"></div>
-            <div class="dmmock__track dmmock__track--c" id="dmTrackC"></div>
+            <!-- 弹幕泳道由 buildDanmaku() 生成：一条泳道一条文字，互不重叠 -->
+            <div class="dmmock__dm" id="dmLanes" aria-hidden="true"></div>
             <div class="dmmock__ctrl">
               <button class="dmmock__btn dmmock__btn--on" data-dm="toggle">弹幕 · 开</button>
               <button class="dmmock__btn" data-dm="block">屏蔽词 3</button>
@@ -667,6 +666,6 @@
   </div>
 </footer>
 
-<script src="js/app.js?v=16"></script>
+<script src="js/app.js?v=17"></script>
 </body>
 </html>
