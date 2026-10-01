@@ -269,10 +269,6 @@ html.js-reveal .reveal-card.in{
 }
 .sec-sub{margin-top:16px;font-size:clamp(15px,1.8vw,19px);color:var(--text-2)}
 
-/* 剧库区没有主标题，只剩一句副标题；
-   通用节头的 margin-top:16px 是为「紧跟大标题」留的，这里要去掉。 */
-.sec-head--sub-only .sec-sub{margin-top:0}
-
 /* ================= 剧库 ================= */
 .library{padding:60px 0 110px}
 .chips{
