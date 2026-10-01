@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#000000">
 <title>短剧之家 — 把好剧，装进口袋</title>
-<meta name="description" content="短剧之家 · 海量短剧免费观看。无感加载下集、离线弹幕、批量下载、WebDAV 全端同步播放记录，手机与电脑双端通用。">
+<meta name="description" content="短剧之家 · 海量短剧免费观看。无感加载下集、离线弹幕、批量下载、WebDAV 全端同步播放记录，手机、电脑与电视三端通用。">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-<link rel="stylesheet" href="css/main.css?v=6">
+<link rel="stylesheet" href="css/main.css?v=8">
 </head>
 <body>
 
@@ -25,7 +25,7 @@
     <nav class="nav__links" aria-label="页面导航">
       <a href="#library">剧库</a>
       <a href="#exclusive">独家功能</a>
-      <a href="#devices">双端下载</a>
+      <a href="#devices">三端下载</a>
       <a href="#faq">常见问题</a>
     </nav>
     <div class="nav__actions">
@@ -43,7 +43,7 @@
   <section class="hero">
     <div class="hero__glow" aria-hidden="true"></div>
     <div class="hero__inner">
-      <p class="hero__eyebrow reveal">全新 v2 · 手机与电脑双端</p>
+      <p class="hero__eyebrow reveal">全新 v2 · 手机 / 电脑 / 电视三端</p>
       <h1 class="hero__title reveal" data-delay="1">
         <span>把好剧</span>
         <span class="hero__title-em">装进口袋</span>
@@ -477,14 +477,14 @@
     </div>
   </section>
 
-  <!-- ============ 双端 ============ -->
+  <!-- ============ 三端 ============ -->
   <section class="devices" id="devices">
     <div class="wrap">
       <div class="sec-head reveal">
-        <h2 class="sec-title">手机和电脑，<br>都给你准备好了</h2>
-        <p class="sec-sub">同一套内核，两种屏幕的体验各自打磨。</p>
+        <h2 class="sec-title">手机、电脑和电视，<br>都给你准备好了</h2>
+        <p class="sec-sub">同一套内核，三种屏幕的体验各自打磨。</p>
       </div>
-      <div class="dev-grid dev-grid--2">
+      <div class="dev-grid dev-grid--3">
         <div class="dev reveal">
           <div class="dev__art dev__art--phone">
             <svg viewBox="0 0 64 64" width="44" height="44" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="19" y="6" width="26" height="52" rx="5"/><path d="M28 12h8"/></svg>
@@ -521,9 +521,27 @@
           <a class="btn btn--primary dev__btn" id="devPcBtn" href="https://github.com/jackson977800/duanjuapp-release/releases/latest" target="_blank" rel="noopener">前往下载</a>
           <div class="dev__meta" id="devPcMeta">ZIP · 约 90.7 MB</div>
         </div>
+        <div class="dev reveal" data-delay="2">
+          <div class="dev__art dev__art--tv">
+            <svg viewBox="0 0 64 64" width="44" height="44" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="6" y="10" width="52" height="34" rx="3"/><path d="M22 52h20M32 44v8"/><path d="M20 6l-4 4M44 6l4 4" opacity=".55"/></svg>
+          </div>
+          <h3 class="dev__name">Android TV 盒子版</h3>
+          <p class="dev__desc">
+            遥控器操作，客厅大屏专用。按需发布 ——
+            没找到包时，可用手机版投屏到电视观看。
+          </p>
+          <ul class="dev__feat">
+            <li>遥控器适配</li>
+            <li>大屏布局</li>
+            <li>无感加载下集</li>
+            <li>离线弹幕</li>
+          </ul>
+          <a class="btn btn--primary dev__btn" id="devTvBtn" href="https://github.com/jackson977800/duanjuapp-release/releases/latest" target="_blank" rel="noopener">前往下载</a>
+          <div class="dev__meta" id="devTvMeta">APK · 按需发布</div>
+        </div>
       </div>
       <p class="dev-note reveal">
-        TV 盒子版为独立维护，仅在确有更新时发布安装包。平时可用手机投屏到电视观看。
+        TV 盒子版为独立维护，仅在确有更新时发布安装包 —— 点「前往下载」可在发布页翻找历史上传的 TV 包。
       </p>
     </div>
   </section>
@@ -536,7 +554,7 @@
         <h2 class="sec-title">现在就开始看</h2>
         <p class="sec-sub" id="dlVersion">点任意平台按钮，前往发布页选择最新版本</p>
       </div>
-      <div class="dl-grid dl-grid--2">
+      <div class="dl-grid dl-grid--3">
         <a class="dlcard2 reveal" id="dlAndroid" href="https://github.com/jackson977800/duanjuapp-release/releases/latest" target="_blank" rel="noopener">
           <div class="dlcard2__top">
             <span class="dlcard2__ic">
@@ -564,9 +582,23 @@
             <svg viewBox="0 0 12 12" width="11" height="11"><path d="M4.3 2.2 8.5 6l-4.2 3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
         </a>
+        <a class="dlcard2 reveal" data-delay="2" id="dlTv" href="https://github.com/jackson977800/duanjuapp-release/releases/latest" target="_blank" rel="noopener">
+          <div class="dlcard2__top">
+            <span class="dlcard2__ic">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="13" rx="1.8"/><path d="M8 20.5h8M12 17.5v3"/><path d="M7.5 2.5 5.8 4.2M16.5 2.5l1.7 1.7" opacity=".55"/></svg>
+            </span>
+            <span class="dlcard2__badge dlcard2__badge--soft">按需发布</span>
+          </div>
+          <div class="dlcard2__name">Android TV 盒子版</div>
+          <div class="dlcard2__file" id="dlTvFile">APK · 遥控器操作</div>
+          <div class="dlcard2__go">
+            前往下载
+            <svg viewBox="0 0 12 12" width="11" height="11"><path d="M4.3 2.2 8.5 6l-4.2 3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </a>
       </div>
       <p class="dl-note reveal">
-        下载页始终指向最新版本 · 遇到问题可查看
+        三个按钮都指向发布页的最新版本 · TV 盒装包按需发布，可在发布页翻找历史版本 · 遇到问题查看
         <a href="#faq">常见问题</a>
       </p>
     </div>
@@ -581,7 +613,7 @@
       <div class="faq__list" id="faqList">
         <details class="faq__item reveal">
           <summary>官网上的剧集点进去能直接播吗？<span class="faq__sign"></span></summary>
-          <div class="faq__body">官网上的剧集只做展示，帮你了解有哪些内容。想真正播放，请下载手机版或电脑版客户端，全部内容都在里面。</div>
+          <div class="faq__body">官网上的剧集只做展示，帮你了解有哪些内容。想真正播放，请下载手机版、电脑版或 TV 盒子版客户端，全部内容都在里面。</div>
         </details>
         <details class="faq__item reveal">
           <summary>下载按钮为什么跳转到 GitHub？<span class="faq__sign"></span></summary>
@@ -622,10 +654,18 @@
         <details class="faq__item reveal">
           <summary>画质增强是每个平台都有吗？<span class="faq__sign"></span></summary>
           <div class="faq__body">
-            目前只有 <b>Windows 电脑版</b>支持，手机版暂时没有。开启后会把实际输出分辨率往上推，
+            目前只有 <b>Windows 电脑版</b>支持，手机版和 TV 版暂时没有。开启后会把实际输出分辨率往上推，
             最高到 4K（3840 × 2160）。它依赖显卡实时逐帧计算，所以显卡偏弱、笔记本在用电池、
             或者系统发烫时会自动退回原画 —— 宁可画面朴素，也不让播放卡顿。
             另外播放器的画质增强是"锦上添花"，建议先在源站选高清画质再看。
+          </div>
+        </details>
+        <details class="faq__item reveal">
+          <summary>TV 盒子版怎么找不到安装包？<span class="faq__sign"></span></summary>
+          <div class="faq__body">
+            TV 盒子版是独立维护的一条线，<b>只在确实有更新时才发布安装包</b>，所以最新版本的发布页上可能没有它。
+            可以点开<a href="https://github.com/jackson977800/duanjuapp-release/releases" target="_blank" rel="noopener">全部版本列表</a>
+            往回翻，找带 TV 包的历史版本。急着看的话，用手机版投屏到电视是更省事的选择。
           </div>
         </details>
       </div>
@@ -645,7 +685,7 @@
     <nav class="foot__links">
       <a href="#library">剧库</a>
       <a href="#exclusive">独家功能</a>
-      <a href="#devices">双端下载</a>
+      <a href="#devices">三端下载</a>
       <a href="#faq">常见问题</a>
     </nav>
     <p class="foot__legal">
@@ -655,6 +695,6 @@
   </div>
 </footer>
 
-<script src="js/app.js?v=6"></script>
+<script src="js/app.js?v=8"></script>
 </body>
 </html>

@@ -36,7 +36,7 @@
     drawer.className = 'nav__drawer';
     drawer.style.display = 'none';
     drawer.innerHTML = '<a href="#library">剧库</a><a href="#exclusive">独家功能</a>' +
-      '<a href="#devices">双端下载</a><a href="#faq">常见问题</a><a href="#download">下载</a>';
+      '<a href="#devices">三端下载</a><a href="#faq">常见问题</a><a href="#download">下载</a>';
     nav.parentNode.insertBefore(drawer, nav.nextSibling);
 
     function close() {
@@ -691,14 +691,13 @@
       el.rel = 'noopener';
     }
 
-    // 手机 / 电脑：直达最新版
+    // 手机 / 电脑 / TV：统一直达最新版发布页
     link($('#dlAndroid'), RELEASE.latest, true);
     link($('#devPhoneBtn'), RELEASE.latest, true);
     link($('#dlWindows'), RELEASE.latest, true);
     link($('#devPcBtn'), RELEASE.latest, true);
-
-    // TV：给全部版本列表，方便翻找
-    link($('#dlTv'), RELEASE.all, true);
+    link($('#dlTv'), RELEASE.latest, true);
+    link($('#devTvBtn'), RELEASE.latest, true);
 
     var af = $('#dlAndroidFile');
     if (af) af.textContent = 'APK · 约 ' + RELEASE.androidSize;
@@ -709,6 +708,12 @@
     if (wf) wf.textContent = 'ZIP 免安装 · 约 ' + RELEASE.windowsSize;
     var wm = $('#devPcMeta');
     if (wm) wm.textContent = 'ZIP · 约 ' + RELEASE.windowsSize;
+
+    // TV 包按需发布，不给具体体积，避免承诺一个不存在的文件
+    var tf = $('#dlTvFile');
+    if (tf) tf.textContent = 'APK · 遥控器操作';
+    var tm = $('#devTvMeta');
+    if (tm) tm.textContent = 'APK · 按需发布';
   }
 
   /* ---------- 启动 ---------- */

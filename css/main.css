@@ -469,6 +469,8 @@ html.js-reveal .reveal.in{opacity:1;transform:none}
 /* ================= 全平台 ================= */
 .devices{padding:120px 0}
 .dev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+/* 显式三列别名：与 --2 对称，避免将来误改基础网格 */
+.dev-grid--3{grid-template-columns:repeat(3,1fr)}
 .dev{
   background:var(--surface);border:1px solid var(--line);
   border-radius:var(--radius);padding:38px 28px;
@@ -540,6 +542,11 @@ html.js-reveal .reveal.in{opacity:1;transform:none}
   background:rgba(255,45,85,.15);color:var(--accent);
 }
 .dlcard2__badge--gray{background:rgba(255,255,255,.07);color:var(--text-3)}
+/* 「按需发布」这类说明性徽章：不抢推荐位，用中性色 */
+.dlcard2__badge--soft{
+  background:rgba(255,159,10,.13);color:#ff9f0a;
+  border:1px solid rgba(255,159,10,.2);
+}
 .dlcard2__name{font-size:17px;font-weight:600;letter-spacing:-.01em}
 .dlcard2__file{margin-top:7px;font-size:12.5px;color:var(--text-3);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -1135,13 +1142,19 @@ html.js-reveal .reveal.in{opacity:1;transform:none}
 .foot__legal{font-size:11.5px;color:var(--text-3);line-height:1.7}
 
 /* ================= 响应式 ================= */
+@media (max-width:1100px){
+  /* 三列在中等宽度先降到两列，比直接堆成一列更省纵向空间 */
+  .dev-grid,.dev-grid--3{grid-template-columns:repeat(2,1fr);gap:18px}
+  .dl-grid,.dl-grid--3{grid-template-columns:repeat(2,1fr);gap:16px}
+}
+
 @media (max-width:1000px){
   .feature__wrap{grid-template-columns:1fr;gap:52px}
   .feature--flip .feature__copy{order:1}
   .feature--flip .feature__visual{order:2}
   .feature__visual{order:2}
-  .dev-grid--2{grid-template-columns:1fr;gap:16px}
-  .dl-grid--2{grid-template-columns:1fr;gap:14px}
+  .dev-grid--2,.dev-grid--3{grid-template-columns:1fr;gap:16px}
+  .dl-grid--2,.dl-grid--3{grid-template-columns:1fr;gap:14px}
   .excl-grid{grid-template-columns:1fr;gap:14px}
   .nav__links{display:none}
   .nav__toggle{display:block;margin-left:auto}
