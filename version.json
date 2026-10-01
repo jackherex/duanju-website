@@ -1,4 +1,4 @@
 {
-  "build": "b2",
+  "build": "b3",
   "note": "与 index.html 里的 BUILD 常量保持一致。每次改动 index.html/css/js 后都要 +1，用于让旧缓存的页面自动纠正到最新版。"
 }
