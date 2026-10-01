@@ -73,18 +73,74 @@
     // 启用隐藏态（类加上去之后，未进视口的元素才隐藏）
     root.classList.add('js-reveal');
 
+    /* 编排型区块：整块作为一个观察目标，进入视口后让卡内元素依次弹出。
+       为什么不逐卡观察：7 张卡各自 255px 高，逐卡触发时滚过一屏会有
+       四五张同时进入，错峰被淹没 —— 看起来就是「唰」地一下全出来。
+       改成整块触发 + 按行分组延迟，才有一层层铺开的节奏。 */
+    var CHOREO = '.excl-grid';
+    var choreographed = [];
+
+    $$(CHOREO).forEach(function (grid) {
+      var items = $$('.reveal', grid);
+      if (!items.length) return;
+
+      // 按渲染位置分行：同一行的卡共享延迟，行与行之间递增
+      var rows = [];
+      items.forEach(function (el) {
+        var top = Math.round(el.getBoundingClientRect().top);
+        var row = rows.filter(function (r) { return Math.abs(r.top - top) < 8; })[0];
+        if (!row) { row = { top: top, items: [] }; rows.push(row); }
+        row.items.push(el);
+      });
+      rows.sort(function (a, b) { return a.top - b.top; });
+
+      items.forEach(function (el) {
+        el.classList.remove('reveal');
+        el.classList.add('reveal-card');
+        choreographed.push(el);
+      });
+
+      rows.forEach(function (row, i) {
+        row.items.forEach(function (el) {
+          // 卡内再做一次微错峰，避免同一行两张卡同时动
+          var slot = row.items.indexOf(el);
+          el.style.transitionDelay = (i * 0.11 + slot * 0.05).toFixed(3) + 's';
+        });
+      });
+    });
+
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
-    els.forEach(function (el) { io.observe(el); });
+    els.forEach(function (el) {
+      if (choreographed.indexOf(el) === -1) io.observe(el);
+    });
 
-    // 兜底 1：位置在视口内的先直接显示（覆盖锚点直跳、首屏）
+    // 编排区块：给整块挂观察器，一进视口就放整组动画
+    var ioBlock = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        ioBlock.unobserve(e.target);
+        // 先让卡片回到初始隐藏态，再加 in，确保过渡一定被触发
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            choreographed.forEach(function (el) { el.classList.add('in'); });
+          });
+        });
+      });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0.05 });
+    $$(CHOREO).forEach(function (g) { ioBlock.observe(g); });
+
+    /* 兜底：位置已在视口内的直接显示。
+       ⚠️ 这里只作用于「非编排」元素 —— 编排区块交给它自己的观察器，
+       否则 pass() 会在滚动到位之前就把整组点亮，把节奏抹平。 */
     var pass = function () {
       var vh = window.innerHeight;
       els.forEach(function (el) {
         if (el.classList.contains('in')) return;
+        if (choreographed.indexOf(el) !== -1) return;
         var r = el.getBoundingClientRect();
         if (r.top < vh * 1.08 && r.bottom > -120) el.classList.add('in');
       });
@@ -93,13 +149,29 @@
     setTimeout(pass, 700);
     window.addEventListener('load', pass);
 
-    // 兜底 2：锚点跳转后等滚动稳定再判定一次
+    // 锚点跳转后等滚动稳定再判定一次
     function onHash() { setTimeout(pass, 120); setTimeout(pass, 900); }
     window.addEventListener('hashchange', onHash);
     if (location.hash) onHash();
 
-    // 兜底 3：万一观察器完全没生效（极端环境），3 秒后全部显示
-    setTimeout(showAll, 3000);
+    // 兜底 3：确保「用户真的滚到了却还看不见」时才强制显示。
+    // ⚠️ 绝不能用「页面加载后 N 秒」当判据 —— 那样用户还没滚到，
+    // 编排好的整组就已经被 showAll 点亮，滚动到位时什么都不剩。
+    // 这里改成：只有元素确实进入视口（说明观察器失效了）才兜底。
+    var guard = function () {
+      var vh = window.innerHeight;
+      var stuck = els.filter(function (el) {
+        if (el.classList.contains('in')) return false;
+        var r = el.getBoundingClientRect();
+        return r.top < vh * 0.92 && r.bottom > 0;
+      });
+      if (stuck.length) stuck.forEach(function (el) { el.classList.add('in'); });
+    };
+    setInterval(guard, 1200);
+    window.addEventListener('scroll', function () {
+      // 滚动过程中若发现已在视口内却没显示，立即补上（防观察器被禁用）
+      guard();
+    }, { passive: true });
   }
 
   /* ---------- 数字动画 ---------- */

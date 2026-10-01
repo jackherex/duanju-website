@@ -61,10 +61,27 @@ html.js-reveal .reveal{
   will-change:opacity,transform;
 }
 html.js-reveal .reveal.in{opacity:1;transform:none}
+/* 错峰阶梯：步长 80ms。
+   ⚠️ 必须与 JS 里实际用到的最大 data-delay 对齐 —— 之前只写到 4，
+   而独家功能区用了 5 / 6，导致最后两张卡没有延迟、节奏断掉。 */
 .reveal[data-delay="1"]{transition-delay:.08s}
 .reveal[data-delay="2"]{transition-delay:.16s}
 .reveal[data-delay="3"]{transition-delay:.24s}
 .reveal[data-delay="4"]{transition-delay:.32s}
+.reveal[data-delay="5"]{transition-delay:.40s}
+.reveal[data-delay="6"]{transition-delay:.48s}
+.reveal[data-delay="7"]{transition-delay:.56s}
+.reveal[data-delay="8"]{transition-delay:.64s}
+
+/* 编排型卡片（独家功能区）：位移更大、时长更短，
+   配合 JS 按行下发的 transition-delay，滚到时一层层铺开。
+   延迟由 JS 内联设置，故此处不设 transition-delay。 */
+html.js-reveal .reveal-card{
+  opacity:0;transform:translateY(38px);
+  transition:opacity .62s var(--ease),transform .62s var(--ease);
+  will-change:opacity,transform;
+}
+html.js-reveal .reveal-card.in{opacity:1;transform:none}
 
 /* ================= 导航 ================= */
 .nav{
@@ -1191,6 +1208,6 @@ html.js-reveal .reveal.in{opacity:1;transform:none}
 
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.01ms !important;transition-duration:.01ms !important}
-  .reveal{opacity:1;transform:none}
+  .reveal,.reveal-card{opacity:1;transform:none}
   html{scroll-behavior:auto}
 }
