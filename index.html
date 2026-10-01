@@ -7,7 +7,7 @@
 <title>短剧之家 — 把好剧，装进口袋</title>
 <meta name="description" content="短剧之家 · 海量短剧免费观看。无感加载下集、离线弹幕、批量下载、WebDAV 全端同步播放记录，手机、电脑与电视三端通用。">
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-<link rel="stylesheet" href="css/main.css?v=13">
+<link rel="stylesheet" href="css/main.css?v=14">
 </head>
 <body>
 
@@ -28,7 +28,7 @@
       <a href="#faq">常见问题</a>
     </nav>
     <div class="nav__actions">
-      <a class="btn btn--ghost btn--sm" href="#download">下载</a>
+      <a class="btn btn--ghost btn--sm" href="#devices">下载</a>
     </div>
     <button class="nav__toggle" id="navToggle" aria-label="展开菜单" aria-expanded="false">
       <span></span><span></span>
@@ -52,7 +52,7 @@
         没有广告，没有等待，只有下一集。
       </p>
       <div class="hero__cta reveal" data-delay="3">
-        <a class="btn btn--primary" href="#download">免费下载</a>
+        <a class="btn btn--primary" href="#devices">免费下载</a>
         <a class="btn btn--text" href="#exclusive">
           看看独在哪
           <svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true"><path d="M4.3 2.2 8.5 6l-4.2 3.8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -524,64 +524,6 @@
     </div>
   </section>
 
-  <!-- ============ 下载 ============ -->
-  <section class="download" id="download">
-    <div class="download__glow" aria-hidden="true"></div>
-    <div class="wrap">
-      <div class="dl-head reveal">
-        <h2 class="sec-title">现在就开始看</h2>
-        <p class="sec-sub" id="dlVersion">点任意平台按钮，前往发布页选择最新版本</p>
-      </div>
-      <div class="dl-grid dl-grid--3">
-        <a class="dlcard2 reveal" id="dlAndroid" href="https://github.com/jackson977800/duanjuapp-release/releases/latest" target="_blank" rel="noopener">
-          <div class="dlcard2__top">
-            <span class="dlcard2__ic">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9v9a1.5 1.5 0 0 0 1.5 1.5h9A1.5 1.5 0 0 0 18 18V9"/><path d="M6 9h12M9 5.5 7.8 3.6M15 5.5l1.2-1.9"/><circle cx="12" cy="6.5" r="2.5"/></svg>
-            </span>
-            <span class="dlcard2__badge">推荐</span>
-          </div>
-          <div class="dlcard2__name">Android 手机版</div>
-          <div class="dlcard2__file" id="dlAndroidFile">APK · 约 30.1 MB</div>
-          <div class="dlcard2__go">
-            前往下载
-            <svg viewBox="0 0 12 12" width="11" height="11"><path d="M4.3 2.2 8.5 6l-4.2 3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </a>
-        <a class="dlcard2 reveal" data-delay="1" id="dlWindows" href="https://github.com/jackson977800/duanjuapp-release/releases/latest" target="_blank" rel="noopener">
-          <div class="dlcard2__top">
-            <span class="dlcard2__ic">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg>
-            </span>
-          </div>
-          <div class="dlcard2__name">Windows 电脑版</div>
-          <div class="dlcard2__file" id="dlWindowsFile">ZIP 免安装 · 约 90.7 MB</div>
-          <div class="dlcard2__go">
-            前往下载
-            <svg viewBox="0 0 12 12" width="11" height="11"><path d="M4.3 2.2 8.5 6l-4.2 3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </a>
-        <a class="dlcard2 reveal" data-delay="2" id="dlTv" href="https://github.com/jackson977800/duanjuapp-release/releases/latest" target="_blank" rel="noopener">
-          <div class="dlcard2__top">
-            <span class="dlcard2__ic">
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="13" rx="1.8"/><path d="M8 20.5h8M12 17.5v3"/><path d="M7.5 2.5 5.8 4.2M16.5 2.5l1.7 1.7" opacity=".55"/></svg>
-            </span>
-            <span class="dlcard2__badge dlcard2__badge--soft">按需发布</span>
-          </div>
-          <div class="dlcard2__name">Android TV 盒子版</div>
-          <div class="dlcard2__file" id="dlTvFile">APK · 遥控器操作</div>
-          <div class="dlcard2__go">
-            前往下载
-            <svg viewBox="0 0 12 12" width="11" height="11"><path d="M4.3 2.2 8.5 6l-4.2 3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </a>
-      </div>
-      <p class="dl-note reveal">
-        三个按钮都指向发布页的最新版本 · TV 盒装包按需发布，可在发布页翻找历史版本 · 遇到问题查看
-        <a href="#faq">常见问题</a>
-      </p>
-    </div>
-  </section>
-
   <!-- ============ FAQ ============ -->
   <section class="faq" id="faq">
     <div class="wrap">
@@ -672,6 +614,6 @@
   </div>
 </footer>
 
-<script src="js/app.js?v=11"></script>
+<script src="js/app.js?v=12"></script>
 </body>
 </html>
