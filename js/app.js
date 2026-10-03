@@ -229,7 +229,7 @@
     var wrap = $('#chapNav');
     if (!wrap) return;
     var SECS = ['#f-next', '#f-danmaku', '#f-batch', '#f-rank',
-                '#f-season', '#f-sync', '#f-hq'];
+                '#f-season', '#f-sync', '#f-hq', '#f-reserve'];
 
     var items = [];
     SECS.forEach(function (sel, i) {
@@ -874,6 +874,48 @@
     io.observe(mock);
   }
 
+  /* ---------- 功能 8：预约追更 ---------- */
+  function buildReserve() {
+    var box = $('#resList');
+    var cnt = $('#resCount');
+    if (!box) return;
+
+    var withCover = DATA.items.filter(function (d) { return d.cover; });
+    if (!withCover.length) return;
+
+    // 前两部设为「已预约」，最后一部留成可预约的状态 ——
+    // 这样画面里同时能看到两种样子，比全是同一个状态更说得清
+    var picks = [withCover[4], withCover[6], withCover[8], withCover[1]]
+      .filter(Boolean).slice(0, 4);
+    if (picks.length < 3) picks = withCover.slice(0, 3);
+
+    var dates = ['10 月 5 日 20:00', '10 月 7 日 12:00', '10 月 9 日 20:00', '待定'];
+    var onCount = 0;
+
+    picks.forEach(function (d, i) {
+      var on = i < 2;                       // 前两部已预约
+      if (on) onCount++;
+      var row = document.createElement('div');
+      row.className = 'resrow' + (on ? ' resrow--on' : '');
+      row.style.animationDelay = (120 + i * 70) + 'ms';
+      row.innerHTML =
+        '<span class="resrow__art">' +
+          // 34x46 的小位图用缩略图（见 thumb() 说明）
+          '<img src="' + thumb(d.cover) + '" alt="" loading="lazy" decoding="async">' +
+        '</span>' +
+        '<span class="resrow__body">' +
+          '<span class="resrow__t">' + esc(d.title) + '</span>' +
+          '<span class="resrow__m">' + esc(dates[i] || '待定') + ' 更新</span>' +
+        '</span>' +
+        '<span class="resrow__btn">' + (on ? '已预约' : '预约') + '</span>';
+      box.appendChild(row);
+    });
+
+    if (cnt) {
+      cnt.textContent = onCount + ' 部已预约 · ' + (picks.length - onCount) + ' 部待约';
+    }
+  }
+
   /* ---------- 下载入口 ----------
      所有下载入口统一指向 GitHub Release 页：
        releases/latest 会自动跳转到最新版本，所以官网不需要随版本改动。 */
@@ -911,6 +953,7 @@
     buildSeason();
     buildQuality();
     buildSync();
+    buildReserve();
     fillRelease();
     initReveal();
     initProgress();

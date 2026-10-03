@@ -572,6 +572,72 @@ html.js-reveal .split.in .w{opacity:1;transform:none}
 
 
 
+/* ================= 预约追更 mock ================= */
+.resmock{
+  width:100%;max-width:430px;border-radius:var(--radius);
+  background:var(--surface);border:1px solid var(--line);
+  padding:22px 20px 14px;position:relative;
+  box-shadow:var(--sh-3),var(--inset-top);
+}
+.resmock__head{
+  display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+  padding-bottom:14px;border-bottom:1px solid var(--line);
+}
+.resmock__title{font-size:15px;font-weight:600;letter-spacing:-.012em}
+.resmock__count{
+  font-size:11.5px;color:var(--text-3);flex:none;
+  font-variant-numeric:tabular-nums;
+}
+.resmock__list{display:flex;flex-direction:column;gap:7px;padding:14px 0 2px}
+
+/* 行进场沿用榜单的 rankIn，节奏与其它 mock 一致 */
+.resrow{
+  display:flex;align-items:center;gap:11px;
+  padding:10px 12px;border-radius:12px;
+  background:rgba(255,255,255,.03);border:1px solid var(--line);
+  opacity:0;transform:translateY(9px);
+  animation:rankIn .5s var(--ease) forwards;
+}
+/* 已预约的那一项用主色描边，一眼能看出区别 */
+.resrow--on{
+  background:rgba(255,45,85,.075);
+  border-color:rgba(255,45,85,.24);
+}
+.resrow__art{
+  width:34px;height:46px;border-radius:7px;overflow:hidden;flex:none;
+  background:linear-gradient(150deg,#25252e,#141419);
+}
+.resrow__art img{width:100%;height:100%;object-fit:cover;display:block}
+.resrow__body{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.resrow__t{
+  font-size:12.5px;font-weight:500;line-height:1.35;color:var(--text);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;
+}
+.resrow__m{
+  font-size:10.5px;color:var(--text-3);
+  font-variant-numeric:tabular-nums;
+}
+.resrow__btn{
+  flex:none;font-size:11px;padding:6px 11px;border-radius:999px;
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.09);
+  color:var(--text-2);white-space:nowrap;
+}
+.resrow--on .resrow__btn{
+  background:rgba(255,45,85,.16);color:#ff8298;
+  border-color:rgba(255,45,85,.3);
+}
+.resmock__foot{
+  display:flex;align-items:center;gap:9px;
+  margin-top:12px;padding-top:12px;border-top:1px solid var(--line);
+}
+.resmock__bell{
+  width:24px;height:24px;border-radius:50%;flex:none;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,45,85,.14);color:#ff8298;
+}
+.resmock__hint{font-size:11px;color:var(--text-3)}
+
 /* ================= 全平台 ================= */
 .devices{padding:120px 0}
 .dev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}

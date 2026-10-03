@@ -56,7 +56,7 @@
 }
 </script>
 
-<link rel="stylesheet" href="css/main.css?v=21">
+<link rel="stylesheet" href="css/main.css?v=22">
 </head>
 <body>
 
@@ -124,7 +124,7 @@
     <div class="wrap">
       <div class="sec-head sec-head--filet reveal">
         <p class="excl-eyebrow">独家功能</p>
-        <h2 class="sec-title">这七件事，<br>别家做不了</h2>
+        <h2 class="sec-title">这八件事，<br>别家做不了</h2>
         <p class="sec-sub">不是花哨的噱头，是每天都会用到的实在东西。</p>
       </div>
 
@@ -181,6 +181,14 @@
           <span class="excl__no">07</span>
           <h3 class="excl__t">电脑版画质增强</h3>
           <p class="excl__d">内置实时神经超分，1080P 片源最高推到 4K。逐帧重建线条，不是粗暴放大。</p>
+          <span class="excl__go">了解详情
+            <svg viewBox="0 0 12 12" width="12" height="12"><path d="M4.3 2.2 8.5 6l-4.2 3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+        <a class="excl reveal excl--wide spot tilt" data-delay="7" href="#f-reserve">
+          <span class="excl__no">08</span>
+          <h3 class="excl__t">预约追更</h3>
+          <p class="excl__d">在追的剧点一下预约，更新当天直接来提醒你，不用自己记时间、不用反复去翻。</p>
           <span class="excl__go">了解详情
             <svg viewBox="0 0 12 12" width="12" height="12"><path d="M4.3 2.2 8.5 6l-4.2 3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
@@ -507,6 +515,44 @@
     </div>
   </section>
 
+  <!-- ============ 功能 8：预约追更 ============ -->
+  <section class="feature feature--flip" id="f-reserve">
+    <div class="wrap feature__wrap">
+      <div class="feature__copy">
+        <p class="feature__eyebrow">08 · 预约追更</p>
+        <h2 class="feature__title reveal" data-delay="1" data-split>想看的剧，<br>上线就来叫你</h2>
+        <p class="feature__text reveal" data-delay="2">
+          追的剧不知道什么时候更新，只能隔三差五自己去翻。
+          点一下预约，到点了它会直接提醒你 —— 不用记、不用蹲。
+        </p>
+        <ul class="feature__list reveal" data-delay="3">
+          <li><b>一键预约</b>详情页点一下就行，已追的在追的剧里统一管理</li>
+          <li><b>到点提醒</b>更新当天推送通知，点开直接进播放</li>
+          <li><b>开播预告</b>还没上线的剧也能先预约，上线第一时间知道</li>
+          <li><b>不漏更新</b>多部剧同时追，各自记各自的时间</li>
+        </ul>
+      </div>
+
+      <div class="feature__visual reveal wipe" data-delay="2">
+        <div class="resmock">
+          <div class="resmock__head">
+            <div class="resmock__title">我的追更</div>
+            <div class="resmock__count" id="resCount">3 部待更新</div>
+          </div>
+
+          <div class="resmock__list" id="resList"></div>
+
+          <div class="resmock__foot">
+            <span class="resmock__bell" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14"><path d="M12 3a5.2 5.2 0 0 0-5.2 5.2v3.1L5 14.2h14l-1.8-2.9V8.2A5.2 5.2 0 0 0 12 3Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9.6 17a2.5 2.5 0 0 0 4.8 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </span>
+            <span class="resmock__hint">更新当天会来提醒你</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ 三端 ============ -->
   <section class="devices" id="devices">
     <div class="wrap">
@@ -529,6 +575,8 @@
             <li>离线弹幕</li>
             <li>批量下载</li>
             <li>WebDAV 同步</li>
+          
+            <li>预约追更</li>
           </ul>
           <a class="btn btn--primary dev__btn" id="devPhoneBtn" href="https://github.com/jackherex/duanjuzhijia-down-phone/releases/latest" target="_blank" rel="noopener">前往下载</a>
           <div class="dev__meta" id="devPhoneMeta">APK · 约 30.1 MB</div>
@@ -547,6 +595,8 @@
             <li>无感加载下集</li>
             <li>离线弹幕</li>
             <li>WebDAV 同步</li>
+          
+            <li>预约追更</li>
           </ul>
           <a class="btn btn--primary dev__btn" id="devPcBtn" href="https://github.com/jackherex/duanjuzhijia-down-pc/releases/latest" target="_blank" rel="noopener">前往下载</a>
           <div class="dev__meta" id="devPcMeta">ZIP · 约 90.7 MB</div>
@@ -565,6 +615,8 @@
             <li>大屏布局</li>
             <li>无感加载下集</li>
             <li>离线弹幕</li>
+          
+            <li>预约追更</li>
           </ul>
           <a class="btn btn--primary dev__btn" id="devTvBtn" href="https://github.com/jackherex/duanjuzhijia-down-tv/releases/latest" target="_blank" rel="noopener">前往下载</a>
           <div class="dev__meta" id="devTvMeta">APK · 按需发布</div>
@@ -666,7 +718,7 @@
   </div>
 </footer>
 
-<script src="js/app.js?v=19"></script>
+<script src="js/app.js?v=20"></script>
 
 <!--
   版本自检：让「改了但用户看不到」这件事自动消失
@@ -686,7 +738,7 @@
 -->
 <script>
 (function () {
-  var BUILD = 'b4';
+  var BUILD = 'b5';
   var KEY = '_siteBuild';
   try {
     if (sessionStorage.getItem(KEY) === BUILD) return;   // 本次会话已是最新
